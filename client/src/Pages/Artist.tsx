@@ -1,8 +1,11 @@
 import React from 'react'
 
 function Artist() {
+  console.log(
+  "hello"
+  )
   return (
-    <div>Artist</div>
+    <div className='text-center'>Artist</div>
   )
 }
 
