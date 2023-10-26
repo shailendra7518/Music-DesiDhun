@@ -2,7 +2,7 @@ import React from 'react'
 
 function Album() {
   return (
-    <div>Album</div>
+    <div className='m-auto text-4xl text-center'>Album</div>
   )
 }
 

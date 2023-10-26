@@ -2,7 +2,7 @@ import React from 'react'
 
 function SearchResult() {
   return (
-    <div>SearchResult</div>
+    <div className='text-center'>SearchResult</div>
   )
 }
 
