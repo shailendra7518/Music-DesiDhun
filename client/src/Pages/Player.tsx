@@ -27,11 +27,10 @@ function Player() {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-transparent p-3 flex items-center justify-between ">
-      {/* Music Info */}
+    <div className="absolute inset-x-0 bottom-0 h-16 flex items-center justify-between pl-2 pr-2 bg-slate-700 ">
       <div className="flex items-center">
         <img
-          src="https://firebasestorage.googleapis.com/v0/b/real-state-f5edf.appspot.com/o/1698230464630tinywow_WhatsApp_Image_2022-10-21_at_20.17.21_34219904-removebg-preview.png?alt=media&token=eed29ef6-edfb-43b9-9503-2d6e22650eb3" // Replace with actual album cover source
+          src="https://firebasestorage.googleapis.com/v0/b/real-state-f5edf.appspot.com/o/1698230464630tinywow_WhatsApp_Image_2022-10-21_at_20.17.21_34219904-removebg-preview.png?alt=media&token=eed29ef6-edfb-43b9-9503-2d6e22650eb3" 
           alt="Album Cover"
           className="w-12 h-12 rounded mr-4"
         />
@@ -41,14 +40,12 @@ function Player() {
         </div>
       </div>
 
-      {/* Music Controls */}
-
       <div className="flex gap-4 ">
         <button className=" text-white  text-2xl " onClick={handlePrevious}>
           <TbPlayerTrackPrevFilled />
         </button>
         <button
-          className="bg-pink-500 p-4 rounded-3xl text-2xl  text-white"
+          className="bg-red-500 p-4 rounded-3xl text-2xl  text-white"
           onClick={togglePlay}
         >
           {isPlaying ? <FaPause /> : <FaPlay />}
