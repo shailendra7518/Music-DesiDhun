@@ -27,7 +27,7 @@ function Player() {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-gray-800 p-3 flex items-center justify-between ">
+    <div className="fixed bottom-0 left-0 w-full bg-transparent p-3 flex items-center justify-between ">
       {/* Music Info */}
       <div className="flex items-center">
         <img

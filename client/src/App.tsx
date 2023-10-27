@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router'
 import LeftSidebar from './Components/LeftSidebar'
 import Home from './Pages/Home'
 import Album from './Pages/Album'
-import SignUp from './Pages/SignUp';
+import SignUp from './Pages/Authentication';
 import Browse from './Pages/Browse';
 import Playlist from './Pages/Playlist';
 import Profile from './Pages/Profile';
