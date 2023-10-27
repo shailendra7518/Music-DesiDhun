@@ -2,7 +2,8 @@ import { Route, Routes } from "react-router";
 import LeftSidebar from "./Components/LeftSidebar";
 import Home from "./Pages/Home";
 import Album from "./Pages/Album";
-import Authentication from "./Pages/Authentication";
+import SignIn from "./Pages/SignIn";
+import SignUp from "./Pages/SignUp";
 import Browse from "./Pages/Browse";
 import Playlist from "./Pages/Playlist";
 import Profile from "./Pages/Profile";
@@ -11,7 +12,7 @@ import Player from "./Pages/Player";
 import Songs from "./Pages/Songs";
 import PrivateRoute from "./Components/PrivateRoute";
 
-function App() {
+const App:React.FC=() =>{
   return (
     <>
       <div className="flex">
@@ -24,7 +25,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/album" element={<Album />} />
-            <Route path="/authentication" element={<Authentication />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
             <Route path="/browse" element={<Browse />} />
             <Route path="/playlist" element={<Playlist />} />
 
