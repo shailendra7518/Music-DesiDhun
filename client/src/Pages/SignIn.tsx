@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { signInFailure, signInStart, signInSuccess } from "../Redux/features/authSlice";
 const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
 
 interface FormData {
@@ -8,12 +10,13 @@ interface FormData {
 }
 
 const  SignIn:React.FC=()=>{
-  const initialState: FormData = {
-    email: "",
-    password: "",
-  };
+  const initialState: FormData = {email: "",password: "",};
   const [formData, setFormData] = useState(initialState);
   const Navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -21,6 +24,7 @@ const  SignIn:React.FC=()=>{
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       try {
+        dispatch(signInStart());
         const res = await fetch(`${apiUrl}/api/auth/signin`, {
           method: "POST",
           headers: {
@@ -31,9 +35,11 @@ const  SignIn:React.FC=()=>{
 
         const data = await res.json();
         setFormData(initialState);
+        dispatch(signInSuccess(data))
         Navigate('/')
-        console.log("user data", data);
+
       } catch (error) {
+        dispatch(signInFailure(error))
         console.log(error);
       }
     };

@@ -1,11 +1,11 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
-const  bcrypt  = require('bcrypt');
-const UserModel = require('../Models/user.model');
+const express = require("express");
+const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const UserModel = require("../Models/user.model");
 const authController = {
-    signupUser: async (req, res, next) => {
-        console.log(req.body)
+  signupUser: async (req, res, next) => {
+    console.log(req.body);
     try {
       const { username, email, password } = req.body;
 
@@ -43,9 +43,9 @@ const authController = {
         });
       }
 
-        // Hash the password
-        console.log("working")
-      const hashedPassword = await bcrypt.hash(password,10)
+      // Hash the password
+      console.log("working");
+      const hashedPassword = await bcrypt.hash(password, 10);
 
       // Create a new user
       const newUser = new UserModel({
@@ -97,13 +97,12 @@ const authController = {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
         expiresIn: "10h",
       }); // Change 'secret_key' to your own secret
-
+      delete user.password;
       res
         .cookie("acess-token", token, {
           maxAge: 1000 * 60 * 10,
           httpOnly: true,
           secure: false,
-        
         })
         .json({ status: 201, message: "Login successful", user, token });
     } catch (error) {
@@ -128,7 +127,6 @@ const authController = {
             maxAge: 1000 * 60 * 10,
             httpOnly: true,
             secure: false,
-        
           })
           .json({
             stats: 201,
@@ -171,4 +169,3 @@ const authController = {
 };
 
 module.exports = authController;
-  
