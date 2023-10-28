@@ -113,6 +113,7 @@ const authController = {
   },
 
   gooleAuth: async (req, res, next) => {
+     
     try {
       // check if the user is already avalible
       const user = await UserModel.findOne({ email: req.body.email });
@@ -145,7 +146,7 @@ const authController = {
           username: req.body.username.split(" ").join("").toLowerCase(),
           email: req.body.email,
           password: hashedPassword,
-          avatar: req.body.photo,
+          avatar: req.body.avatar,
         });
         // save the user
         await myUser.save();

@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import GoogleAuth from "../Components/GoogleAuth";
+import { useSelector } from "react-redux";
 const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
 interface FormData {
   username: string;
@@ -14,8 +17,10 @@ const SignUp:React.FC=()=> {
     email: "",
     password: "",
   };
+  const {currentUser}=useSelector((state:any)=>state.user)
   const [formData, setFormData] = useState(initialState);
   const Navigate = useNavigate();
+ 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -96,7 +101,9 @@ const SignUp:React.FC=()=> {
         >
           Sign Up
         </button>
+        <GoogleAuth/>
       </form>
+
       <div className="text-white">
         Have an account ?
         <Link to={'/signin'}>

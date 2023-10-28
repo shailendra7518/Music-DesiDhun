@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { signInFailure, signInStart, signInSuccess } from "../Redux/features/authSlice";
+import GoogleAuth from "../Components/GoogleAuth";
 const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
 
 interface FormData {
@@ -13,6 +14,7 @@ const  SignIn:React.FC=()=>{
   const initialState: FormData = {email: "",password: "",};
   const [formData, setFormData] = useState(initialState);
   const Navigate = useNavigate();
+  const { currentUser } = useSelector((state:any) => state.user);
   const dispatch = useDispatch();
 
 
@@ -85,6 +87,7 @@ const  SignIn:React.FC=()=>{
         >
           Sign In
         </button>
+        <GoogleAuth/>
       </form>
       <div className="text-white">
         Don't have an account ?

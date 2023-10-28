@@ -11,6 +11,7 @@ import Artist from "./Pages/Artist";
 import Player from "./Pages/Player";
 import Songs from "./Pages/Songs";
 import PrivateRoute from "./Components/PrivateRoute";
+import UploadSong from "./Components/UploadSong";
 
 const App:React.FC=() =>{
   return (
@@ -35,6 +36,7 @@ const App:React.FC=() =>{
             <Route path="/song" element={<Songs />} />
             <Route element={<PrivateRoute />}>
               <Route path="/profile" element={<Profile />} />
+              <Route path="/upload" element={<UploadSong />} />
             </Route>
           </Routes>
         </div>

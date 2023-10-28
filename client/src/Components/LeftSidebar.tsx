@@ -5,19 +5,22 @@ import { BiPhotoAlbum, BiSolidCalendarStar } from "react-icons/bi";
 import { FiRadio } from 'react-icons/fi';
 import { AiFillHeart } from 'react-icons/ai'
 import {CgBrowse} from 'react-icons/cg'
+import { useSelector } from "react-redux";
 const LeftSidebar = () => {
+  const {currentUser} = useSelector((state: any) => state.user)
+  
   return (
     <div className="bg-gray-800">
       {/* Profile Section */}
       <Link to={"/profile"}>
         <div className="flex items-center bg-slate-700 mt-5 p-2 rounded-md">
           <img
-            src="https://firebasestorage.googleapis.com/v0/b/real-state-f5edf.appspot.com/o/1698230464630tinywow_WhatsApp_Image_2022-10-21_at_20.17.21_34219904-removebg-preview.png?alt=media&token=eed29ef6-edfb-43b9-9503-2d6e22650eb3" // Replace with actual profile image source
+            src={currentUser &&currentUser.user.avatar } // Replace with actual profile image source
             alt="Profile"
             className="w-10 h-10 rounded-full mr-3 "
           />
           <div>
-            <p className="text-white font-semibold text-sm">John Doe</p>
+            <p className="text-white font-semibold text-sm">{ currentUser && currentUser.user.username}</p>
             <p className="text-gray-400 text-xs">Premium User</p>
           </div>
         </div>

@@ -11,13 +11,13 @@ interface User {
 }
 
 interface AuthState {
-  user: User | null;
+  currentUser: User | null;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: AuthState = {
-  user: null,
+  currentUser: null,
   loading: false,
   error: null,
 };
@@ -31,7 +31,7 @@ const authSlice = createSlice({
     },
     signInSuccess: (state, action) => {
      
-      state.user = action.payload;
+      state.currentUser = action.payload;
     
       state.loading = false; // Corrected this line
       state.error = null; // Corrected this line
