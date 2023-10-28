@@ -1,75 +1,104 @@
-import React, { useState } from "react";
+import React, { useRef, useState ,useEffect} from "react";
 const apiUrl :string =import.meta.env.VITE_API_BASE_URL
-
+import {
+  getStorage,
+  uploadBytesResumable,
+  ref,
+  getDownloadURL,
+} from "firebase/storage";
+import app from "../firebase/firebase";
+import { useSelector } from "react-redux";
 interface FormData{
     title: string;
     artist: string;
     album: string;
-    file: any
+    fileUrl: any
 }
+
+
 
 const UploadSong: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     title: "",
     artist: "",
     album: "",
-    file: '',
+    fileUrl: '',
   });
+    const {currentUser}=useSelector((state:any)=>state.user)
+     const [file, setFile] = useState<File| null >(null);
+     const fileRef = useRef<HTMLInputElement>(null);
+     const [filePerc, setFilePerc] = useState(0);
+     const [fileUploadError, setFileUploadError] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, value ,id} = e.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [id]: value,
     });
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
-    setFormData({
-      ...formData,
-      file,
-    });
-  };
+    setFile(file);
+    };
+    
+    
+  useEffect(() => {
+    if (file) {
+      handleFileUpload(file);
+    }
+  }, [file]);
+  console.log(`upload prgress ${filePerc}% done`);
+  const handleFileUpload = (file:any) => {
+    const storage = getStorage(app);
+    const fileName = new Date().getTime() + file.name;
+    const storageRef = ref(storage, fileName);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setFilePerc(Math.round(progress));
+      },
+      (error) => {
+        setFileUploadError(true);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
+          setFormData({ ...formData, fileUrl: downloadURL })
+        );
+      }
+    );
+    };
+    console.log("formdata",formData,fileUploadError)
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+      e.preventDefault();
+      try {
+          const res = await fetch(`${apiUrl}/api/songs/upload`, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'token': currentUser.token
+              },
+              body: JSON.stringify({...formData ,uploadedBy:currentUser.user._id})
 
-    // try {
-    //   const { title, artist, album, file } = formData;
+          });
 
-    //   if (!title || !artist || !album || !file) {
-    //     alert("All fields are required");
-    //     return;
-    //   }
+          const data = await res.json();
+          console.log(data)
+          
 
-    //   const formData = new FormData();
-    //   formData.append("title", title);
-    //   formData.append("artist", artist);
-    //   formData.append("album", album);
-    //   formData.append("file", file);
-
-    //   const response = await fetch(`${apiUrl}/api/songs`, {
-    //     method: "POST",
-    //     body: formData,
-    //   });
-
-    //   if (response.ok) {
-    //     alert("Song uploaded successfully!");
-    //     setFormData({
-    //       title: "",
-    //       artist: "",
-    //       album: "",
-    //       file: null,
-    //     });
-    //   } else {
-    //     alert("Error uploading song");
-    //   }
-    // } catch (error) {
-    //   console.error("Error uploading song:", error);
-    //   alert("Error uploading song");
-    // }
-  };
+          
+      } catch (error) {
+          
+          console.log(error)
+      }
+       
+    
+       };
 
   return (
     <div className="max-w-md mx-auto mt-10 p-4 bg-white border rounded-lg shadow-lg">
@@ -126,9 +155,10 @@ const UploadSong: React.FC = () => {
           </label>
           <input
             type="file"
+            onChange={handleFileChange}          
+            ref={fileRef}
             id="file"
             name="file"
-            onChange={handleFileChange}
             className="w-full p-2 border rounded"
             accept=".mp3"
             required

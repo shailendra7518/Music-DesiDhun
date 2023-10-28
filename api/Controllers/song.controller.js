@@ -26,6 +26,14 @@ const songController = {
       .status(500)
       .json({ message: "Internal Server Error", error: error.message });
   }
+  },
+  getSong : async (req, res) => {
+  try {
+    const songs = await SongModel.find();
+    res.json({status:200,message:'successfull',songs});
+  } catch (error) {
+    res.status(500).json({ message: 'Internal Server Error', error: error.message });
+  }
 }
 
 

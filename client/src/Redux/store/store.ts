@@ -3,8 +3,10 @@ import { configureStore, combineReducers ,getDefaultMiddleware } from "@reduxjs/
 import authReducer from "../features/authSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import songSlice from "../features/songSlice";
 const rootReducer = combineReducers({
   user: authReducer,
+  song:songSlice
 });
 const persistConfig = {
   key: "user",

@@ -1,17 +1,40 @@
-import  { useState} from 'react'
+import { useState, useEffect } from 'react'
+const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
 import { FaPlay } from 'react-icons/fa'
 import { FaPause } from "react-icons/fa6";
 import { TbPlayerTrackNextFilled, TbPlayerTrackPrevFilled } from 'react-icons/tb'
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
+import { useDispatch, useSelector } from 'react-redux';
+import { playSong ,pauseSong} from '../Redux/features/songSlice';
+
 function Player() {
-  const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(50);
-  const [isMute, setIsMute] =useState(false)
-  
+  const [isMute, setIsMute] = useState(false) 
+  const {currentSong, isPlaying}=useSelector((state:any)=>state.song)
+  const dispatch=useDispatch()
   // Initial volume value
+    const [songs, setSongs] = useState<any>([]);
+    useEffect(() => {
+      const fetchSongs = async () => {
+        try {
+          const res = await fetch(`${apiUrl}/api/songs/get`);
+          const data = await res.json();
+          console.log(data);
+          setSongs(data.songs);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchSongs();
+    }, []);
 
   const togglePlay = () => {
-    setIsPlaying(!isPlaying);
+    if (isPlaying) {
+      dispatch(pauseSong())
+    } else {
+        dispatch(playSong(songs[0]));
+    }
+   
   };
 
   const handleNext = () => {
@@ -28,9 +51,10 @@ function Player() {
 
   return (
     <div className="absolute inset-x-0 bottom-0 h-16 flex items-center justify-between pl-2 pr-2 bg-slate-700 ">
+
       <div className="flex items-center">
         <img
-          src="https://firebasestorage.googleapis.com/v0/b/real-state-f5edf.appspot.com/o/1698230464630tinywow_WhatsApp_Image_2022-10-21_at_20.17.21_34219904-removebg-preview.png?alt=media&token=eed29ef6-edfb-43b9-9503-2d6e22650eb3" 
+          src='' 
           alt="Album Cover"
           className="w-12 h-12 rounded mr-4"
         />

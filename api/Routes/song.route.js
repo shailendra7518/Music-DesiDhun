@@ -6,6 +6,8 @@ const songController = require("../Controllers/song.controller");
 const authenticate = require("../Middlewares/authenticate");
 
 
-router.post("/upload",authenticate,songController.uploadSong);
+router.post("/upload", authenticate, songController.uploadSong);
+
+router.get("/get", songController.getSong);
 
 module.exports = router;
