@@ -15,7 +15,7 @@ import UploadSong from "./Components/UploadSong";
 import { useSelector } from "react-redux";
 
 const App: React.FC = () => {
-  const {currentSong,isPlaying}=useSelector((state:any)=>state.song)
+  const {isPlaying,player}=useSelector((state:any)=>state.song)
   return (
     <>
       <div className="flex">
@@ -44,7 +44,7 @@ const App: React.FC = () => {
         </div>
       </div>
 
-      <div className=" text-white bottom-0">{isPlaying && <Player />}</div>
+      <div className="fixed w-full text-white bottom-0">{player && <Player />}</div>
     </>
   );
 }

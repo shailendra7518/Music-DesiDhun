@@ -1,27 +1,61 @@
-import React from "react";
-import { useSelector} from "react-redux";
-
+import React,{useEffect,useState} from "react";
+import { useDispatch, useSelector} from "react-redux";
+import { playSong,startSong } from "../Redux/features/songSlice";
+const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
     // HomePage.tsx
 
 const Home: React.FC = () => {
-  const { currentSong } = useSelector((state: any) => state.song);
+  const dispatch = useDispatch();
+const [loading,setLoading]=useState(false)
+  const [songs,setSongs]=useState([])
+ useEffect(() => {
+   const fetchSongs = async () => {
+     try {
+       setLoading(true)
+       const res = await fetch(`${apiUrl}/api/songs/get`);
+       const data = await res.json();
+       console.log(data);
+       setSongs(data.songs);
+       setLoading(false)
+     } catch (error) {
+       setLoading(false)
+       console.log(error);
+     }
+   };
+   fetchSongs();
+ }, []);
   
+  
+  const handlePlay = (song:any)=>{
+    
+  dispatch(startSong(song))
 
+
+  }
   
-  return (
+  return loading ? (
+    <h1>Loading...</h1>
+  ) : (
     <div className="p-6">
       <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">Recommended Music</h2>
-        <div className="flex  md:flex-wrap gap-4">
-          <div className="bg-white w-auto p-4 shadow-lg rounded-lg mb-4">
-            <img
-              src={"http://via.placeholder.com/640x360"}
-              alt={"title"}
-              className="w-full h-32 object-cover mb-2"
-            />
-            <p className="text-xl font-semibold mb-1">title</p>
-            <p className="text-gray-500">artist</p>
-          </div>
+        <h2 className="text-2xl font-semibold mb-4 text-white">Recommended Music</h2>
+        <div className="flex w-full flex-wrap   gap-4">
+          {songs &&
+            songs.map((song: any) => (
+              <div
+                onClick={() => handlePlay(song)}
+                key={song._id}
+                className="bg-rose-100 w-60 p-4 shadow-lg rounded-lg mb-4 cursor-pointer transform hover:scale-105 transition-transform"
+              >
+                <img
+                  src={song.cover}
+                  alt={song.title}
+                  className="w-full h-32 object-cover mb-2 "
+                />
+                <p className=" font-semibold mb-1 truncate">{song.title}</p>
+                <p className="text-gray-500">{song.artist}</p>
+              </div>
+            ))}
         </div>
       </section>
 

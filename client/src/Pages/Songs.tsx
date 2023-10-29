@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import ReactAudioPlayer from "react-audio-player";
+
 import { useSelector } from "react-redux";
 const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
 const Songs: React.FC = () => {
-  const [songs, setSongs] = useState<any>([]);
-  const {currentSong,isPlaying}=useSelector((state:any)=>state.song)
+  // const [songs, setSongs] = useState<any>([]);
+  // const {currentSong,isPlaying}=useSelector((state:any)=>state.song)
 //   const [isLoading, setLoading] = useState(false);
 //   useEffect(() => {
 //     const fetchSongs = async () => {
@@ -25,9 +25,7 @@ const Songs: React.FC = () => {
 // console.log(currentSong,songs)
   return (
     <div>
-      {isPlaying && (
-        <ReactAudioPlayer src={currentSong.file} autoPlay />
-      )}
+    songs
     </div>
   );
 };

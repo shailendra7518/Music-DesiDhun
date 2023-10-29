@@ -3,18 +3,20 @@
 const SongModel = require("../Models/song.model");
 
 const songController = {
-    uploadSong : async (req, res) => {
-  const { title, artist, album, uploadedBy,fileUrl } = req.body;
+  uploadSong: async (req, res) => {
+    console.log(req.body)
+  const { title, artist, album, uploadedBy,fileUrl,cover } = req.body;
 
   try {
     // Check if all required fields are provided
-    if (!title || !artist || !album || !uploadedBy || !fileUrl) {
+    if (!title || !artist || !album || !uploadedBy || !fileUrl ||!cover) {
       return res.status(400).json({ message: "All fields are required." });
     }
 
     const song = await SongModel.create({
       title,
       artist,
+      cover,
       album,
       file: fileUrl,
       uploadedBy,
