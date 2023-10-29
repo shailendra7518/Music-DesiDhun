@@ -12,8 +12,10 @@ import Player from "./Pages/Player";
 import Songs from "./Pages/Songs";
 import PrivateRoute from "./Components/PrivateRoute";
 import UploadSong from "./Components/UploadSong";
+import { useSelector } from "react-redux";
 
-const App:React.FC=() =>{
+const App: React.FC = () => {
+  const {currentSong,isPlaying}=useSelector((state:any)=>state.song)
   return (
     <>
       <div className="flex">
@@ -22,7 +24,7 @@ const App:React.FC=() =>{
           <LeftSidebar />
         </div>
 
-        <div className=" bg-gradient-to-b from-red-900 to-slate-600 flex-1 min-h-screen">
+        <div className="  bg-gradient-to-b from-red-900 to-slate-600 flex-1 min-h-screen  ">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/album" element={<Album />} />
@@ -42,9 +44,7 @@ const App:React.FC=() =>{
         </div>
       </div>
 
-      <div className=" text-white bottom-0">
-        <Player />
-      </div>
+      <div className=" text-white bottom-0">{isPlaying && <Player />}</div>
     </>
   );
 }

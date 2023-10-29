@@ -12,19 +12,31 @@ const LeftSidebar = () => {
   return (
     <div className="bg-gray-800">
       {/* Profile Section */}
-      <Link to={"/profile"}>
-        <div className="flex items-center bg-slate-700 mt-5 p-2 rounded-md">
-          <img
-            src={currentUser &&currentUser.user.avatar } // Replace with actual profile image source
-            alt="Profile"
-            className="w-10 h-10 rounded-full mr-3 "
-          />
-          <div>
-            <p className="text-white font-semibold text-sm">{ currentUser && currentUser.user.username}</p>
-            <p className="text-gray-400 text-xs">Premium User</p>
+
+      {currentUser ? (
+        <Link to={"/profile"}>
+          <div className="flex items-center bg-slate-700 mt-5 p-2 rounded-md">
+            <img
+              src={currentUser && currentUser.user.avatar} // Replace with actual profile image source
+              alt="Profile"
+              className="w-10 h-10 rounded-full mr-3 "
+            />
+            <div>
+              <p className="text-white font-semibold text-sm">
+                {currentUser && currentUser.user.username}
+              </p>
+              <p className="text-gray-400 text-xs">Premium User</p>
+            </div>
           </div>
-        </div>
-      </Link>
+        </Link>
+      ) : (
+        <Link
+          className="text-white flex items-center justify-center bg-slate-700 mt-5 p-2 rounded-md"
+          to={"/signup"}
+        >
+          SignIn
+        </Link>
+      )}
 
       {/* Library Section */}
       <div className=" mt-10">
