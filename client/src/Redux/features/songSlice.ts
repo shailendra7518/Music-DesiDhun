@@ -12,6 +12,7 @@ interface Song {
 }
 
 interface SongState {
+  songList: any|null;
   currentSong: Song | null;
   isPlaying: boolean;
   player: boolean;
@@ -19,6 +20,7 @@ interface SongState {
 }
 
 const initialState: SongState = {
+  songList: [],
   currentSong: null,
   isPlaying: false,
   player:false
@@ -28,6 +30,9 @@ const songSlice = createSlice({
   name: "song",
   initialState,
   reducers: {
+    addSongInList: (state, action) => {
+      state.songList = action.payload;      
+    },
     startSong: (state, action) => {
       state.currentSong = action.payload;
       state.isPlaying = true;
@@ -42,5 +47,5 @@ const songSlice = createSlice({
   },
 });
 
-export const { playSong,pauseSong,startSong } = songSlice.actions;
+export const { playSong,pauseSong,startSong ,addSongInList} = songSlice.actions;
 export default songSlice.reducer;

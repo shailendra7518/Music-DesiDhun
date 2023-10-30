@@ -6,10 +6,14 @@ import { TbPlayerTrackNextFilled, TbPlayerTrackPrevFilled } from 'react-icons/tb
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
 import { useDispatch, useSelector } from 'react-redux';
 import ReactAudioPlayer from "react-audio-player";
-import { pauseSong,playSong } from '../Redux/features/songSlice';
+import { pauseSong,playSong, startSong } from '../Redux/features/songSlice';
 function Player() {
+    const { currentSong, isPlaying, songList } = useSelector(
+      (state: any) => state.song
+    );
   const [volume, setVolume] = useState(50);
   const [isMute, setIsMute] = useState(false) 
+  const [songIndex,setSongIndex]=useState(songList.length/2 || 0)
   const [currentTime, setCurrentTime] = useState({
     minutes: 0,
     seconds: 0,
@@ -23,7 +27,7 @@ function Player() {
   const audioRef = useRef<any | null>(null);
 
   const dispatch =useDispatch()
-  const { currentSong,isPlaying} = useSelector((state: any) => state.song)
+
   const handleTimeUpdate = () => {
     setCurrentTime(formatTime(audioRef.current.audioEl.current.currentTime));
     setDurationTime(formatTime(audioRef.current.audioEl.current.duration));
@@ -31,12 +35,23 @@ function Player() {
   };
   // console.log(duration)
 
-  const handleNext = () => {
+ const handleNext = () => {
     // Logic for playing the next audio track
-    // Replace this with your own logic
+   // Replace this with your own logic
+ console.log('worked')
+   if (songIndex + 1 < songList.length) {
+     
+     dispatch(startSong(songList[songIndex + 1]));
+     setSongIndex(songIndex+1)
+   }
   };
 
   const handlePrevious = () => {
+     console.log("worked");
+      if (songIndex - 1 >=0) {
+        dispatch(startSong(songList[songIndex - 1]));
+        setSongIndex(songIndex-1)
+      }
     // Logic for playing the previous audio track
     // Replace this with your own logic
   };
@@ -69,7 +84,7 @@ function Player() {
   }
   return (
     <>
-      <div className="absolute inset-x-0 bottom-0 h-16 flex items-center justify-between pl-2 pr-2 bg-slate-700 pb-2 ">
+      <div className="absolute inset-x-0 bottom-0 h-16 flex items-center justify-between pl-2 pr-2 bg-gray-800 pb-2 ">
         <div className="flex items-center w-1/3">
           <img
             src={currentSong.cover}
@@ -86,7 +101,11 @@ function Player() {
 
         <div className="flex flex-col justify-center items-center  w-1/3 ">
           <div className="  flex gap-4">
-            <button className=" text-white  text-2xl " onClick={handlePrevious}>
+            <button
+              disabled={songIndex <= 0}
+              className=" text-white hover:opacity-70 cursor-pointer  text-2xl disabled:opacity-40 "
+              onClick={handlePrevious}
+            >
               <TbPlayerTrackPrevFilled />
             </button>
             <button
@@ -95,13 +114,17 @@ function Player() {
             >
               {isPlaying ? <FaPause /> : <FaPlay />}
             </button>
-            <button className="text-white text-2xl " onClick={handleNext}>
+            <button
+              className="text-white hover:opacity-70 cursor-pointer text-2xl disabled:opacity-40 "
+              onClick={handleNext}
+              disabled={songIndex >= songList.length - 1}
+            >
               <TbPlayerTrackNextFilled />
             </button>
           </div>
 
           <div className=" flex w-full pb-2 item-center">
-            <span className='mr-3'>
+            <span className="mr-3">
               {currentTime.minutes}:{currentTime.seconds}
             </span>
             <input
@@ -111,7 +134,7 @@ function Player() {
               value={currentTime.minutes * 60 + currentTime.seconds}
               className="w-full  bg-gray-300 rounded-full  focus:outline-none"
             />
-            <span className='pl-3'>
+            <span className="pl-3">
               {durationTime.minutes}:{durationTime.seconds}
             </span>
           </div>
@@ -151,5 +174,4 @@ function Player() {
     </>
   );
 }
-
 export default Player

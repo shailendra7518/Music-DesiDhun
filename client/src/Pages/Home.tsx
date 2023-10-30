@@ -1,13 +1,15 @@
 import React,{useEffect,useState} from "react";
 import { useDispatch, useSelector} from "react-redux";
-import { playSong,startSong } from "../Redux/features/songSlice";
+import { playSong,startSong,addSongInList } from "../Redux/features/songSlice";
 const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
     // HomePage.tsx
 
 const Home: React.FC = () => {
   const dispatch = useDispatch();
 const [loading,setLoading]=useState(false)
-  const [songs,setSongs]=useState([])
+  
+const {songList}=useSelector((state:any)=>state.song)
+
  useEffect(() => {
    const fetchSongs = async () => {
      try {
@@ -15,7 +17,8 @@ const [loading,setLoading]=useState(false)
        const res = await fetch(`${apiUrl}/api/songs/get`);
        const data = await res.json();
        console.log(data);
-       setSongs(data.songs);
+       dispatch(addSongInList(data.songs))
+      //  setSongs(data.songs);
        setLoading(false)
      } catch (error) {
        setLoading(false)
@@ -40,8 +43,8 @@ const [loading,setLoading]=useState(false)
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 text-white">Recommended Music</h2>
         <div className="flex w-full flex-wrap   gap-4">
-          {songs &&
-            songs.map((song: any) => (
+          {songList.length>0 &&
+            songList.map((song: any) => (
               <div
                 onClick={() => handlePlay(song)}
                 key={song._id}
