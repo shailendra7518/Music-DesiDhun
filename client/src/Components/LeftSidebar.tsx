@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MdFeaturedPlayList, MdOutlineMic, MdMusicNote } from "react-icons/md";
+import { MdFeaturedPlayList, MdOutlineMic, MdMusicNote ,MdHome ,MdSearch} from "react-icons/md";
 import { BiPhotoAlbum, BiSolidCalendarStar } from "react-icons/bi";
 import { FiRadio } from 'react-icons/fi';
 import { AiFillHeart } from 'react-icons/ai'
@@ -37,17 +37,20 @@ const LeftSidebar = () => {
           SignIn
         </Link>
       )}
-
+      <div className="flex  bg-white items-center mt-3 p-2 text-lg rounded-lg">
+        <input type="text" placeholder="Search"  className="outline-none"/>
+        <MdSearch/>
+      </div>
       {/* Library Section */}
-      <div className=" mt-10">
+      <div className=" mt-3 ">
         <p className="text-white font-semibold text-lg mb-2">Library</p>
         <div className="">
           <Link
-            to={"/playlist"}
+            to={"/"}
             className="p-2 text-2xl flex items-center gap-3 text-white opacity-70 hover:opacity-95 font-semibold ml-4 hover:bg-green-800 "
           >
-            <MdFeaturedPlayList />
-            <p className="text-lg">Playlist</p>
+            <MdHome />
+            <p className="text-lg">Home</p>
           </Link>
 
           <Link
@@ -59,11 +62,11 @@ const LeftSidebar = () => {
           </Link>
 
           <Link
-            to={"/album"}
+            to={"/playlist"}
             className="p-2 text-2xl flex items-center gap-3 text-white opacity-70 hover:opacity-95 font-semibold ml-4 hover:bg-green-800"
           >
-            <BiPhotoAlbum />
-            <p className="text-lg">Album</p>
+            <MdFeaturedPlayList />
+            <p className="text-lg">Playlist</p>
           </Link>
 
           <Link

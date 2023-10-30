@@ -17,17 +17,14 @@ import { useSelector } from "react-redux";
 const App: React.FC = () => {
   const {isPlaying,player}=useSelector((state:any)=>state.song)
   return (
-    <>
+    <div className="bg-gradient-to-b from-red-900 to-slate-600">
       <div className="flex">
         {/* <!-- Left Sidebar --> */}
         <div className=" h-screen fixed bg-gray-800 pr-10 pl-6 z-10">
           <LeftSidebar />
         </div>
 
-        <div
-          
-          
-          className=" h-screen fixed overflow-scroll  bg-gradient-to-b from-red-900 to-slate-600 flex-1 min-h-screen left-[238px] pb-16 ">
+        <div className="   min-h-screen  pb-16 ml-[300px]  ">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/album" element={<Album />} />
@@ -47,8 +44,10 @@ const App: React.FC = () => {
         </div>
       </div>
 
-      <div className="fixed w-full z-20 text-white bottom-0">{player && <Player />}</div>
-    </>
+      <div className="fixed w-full z-20 text-white bottom-0">
+        {player && <Player />}
+      </div>
+    </div>
   );
 }
 
