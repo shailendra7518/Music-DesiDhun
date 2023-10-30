@@ -56,6 +56,15 @@ function Player() {
     // Replace this with your own logic
   };
 
+ 
+  const handleEnded = () => {
+    console.log('ended')
+     if (songIndex + 1 < songList.length) {
+       handleNext();
+     } else {
+       handlePrevious();
+     }
+}
 
   const togglePlay = () => {
     if (isPlaying) {
@@ -74,6 +83,7 @@ function Player() {
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVolume(Number(e.target.value));
   };
+    
 
   const  formatTime=(totalSeconds:number) =>{
     const minutes = Math.floor(totalSeconds / 60);
@@ -168,6 +178,7 @@ function Player() {
             volume={isMute ? 0 : volume / 100}
             listenInterval={1000}
             onListen={handleTimeUpdate}
+            onEnded={handleEnded}
           />
         </div>
       </div>

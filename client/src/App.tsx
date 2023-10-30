@@ -27,7 +27,7 @@ const App: React.FC = () => {
         <div
           
           
-          className=" h-screen fixed overflow-scroll  bg-gradient-to-b from-red-900 to-slate-600 flex-1 min-h-screen left-[238px] ">
+          className=" h-screen fixed overflow-scroll  bg-gradient-to-b from-red-900 to-slate-600 flex-1 min-h-screen left-[238px] pb-16 ">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/album" element={<Album />} />
