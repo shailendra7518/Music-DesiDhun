@@ -69,6 +69,7 @@ console.log(cover)
         setFilePerc(Math.round(progress));
       },
       (error) => {
+        console.log(error)
         setFileUploadError(true);
       },
       () => {

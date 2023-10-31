@@ -8,7 +8,7 @@ const Home: React.FC = () => {
   const dispatch = useDispatch();
 const [loading,setLoading]=useState(false)
   
-const {songList}=useSelector((state:any)=>state.song)
+const {songList=[]}=useSelector((state:any)=>state.song)
 
  useEffect(() => {
    const fetchSongs = async () => {

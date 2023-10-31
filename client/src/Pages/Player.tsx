@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ReactAudioPlayer from "react-audio-player";
 import { pauseSong,playSong, startSong } from '../Redux/features/songSlice';
 function Player() {
-    const { currentSong, isPlaying, songList } = useSelector(
+    const { currentSong, isPlaying, songList=[] } = useSelector(
       (state: any) => state.song
     );
   const [volume, setVolume] = useState(50);
