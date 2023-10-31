@@ -93,8 +93,8 @@ function Player() {
   }
   return (
     <>
-      <div className="absolute inset-x-0 bottom-0 h-16 flex items-center justify-between pl-2 pr-2 bg-gray-800 pb-2 ">
-        <div className="flex items-center w-1/3">
+      <div className="absolute inset-x-0 bottom-0  flex flex-col items-center justify-between pl-2 pr-2 bg-gray-800 pb-2 sm:flex-row">
+        <div className="flex items-center justify-between  mb-2 w-full flex-row sm:mb-0 sm:w-1/3 sm:justify-start">
           <img
             src={currentSong.cover}
             alt="Album Cover"
@@ -106,9 +106,25 @@ function Player() {
             </p>
             <p className="text-gray-400 ">{currentSong.artist}</p>
           </div>
+          <div className='flex   sm:hidden '>
+            <button
+              className="text-white text-2xl"
+              onClick={() => setIsMute(!isMute)}
+            >
+              {isMute ? <HiSpeakerXMark /> : <HiSpeakerWave />}
+            </button>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={volume}
+              onChange={handleVolumeChange}
+              className="ml-4 outline-none w-full"
+            />
+          </div>
         </div>
 
-        <div className="flex flex-col justify-center items-center  w-1/3 ">
+        <div className="flex flex-col justify-center items-center w-full sm:w-1/3 ">
           <div className="  flex gap-4">
             <button
               disabled={songIndex <= 0}
@@ -149,7 +165,7 @@ function Player() {
           </div>
         </div>
 
-        <div className="flex items-center w-1/3 justify-end">
+        <div className="flex items-center w-1/3 justify-end hidden sm:block">
           <button
             className="text-white text-2xl"
             onClick={() => setIsMute(!isMute)}

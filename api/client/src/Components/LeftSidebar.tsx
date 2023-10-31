@@ -10,13 +10,13 @@ const LeftSidebar = () => {
   const {currentUser} = useSelector((state: any) => state.user)
   
   return (
-    <div className="bg-gray-800 ">
+    <div className="bg-gray-800 pt-2  w-16 sm:w-auto sm:pl-2">
       {/* Profile Section */}
 
       {currentUser ? (
-        <div className="flex   items-center gap-3 left-0  mt-1 p-2 rounded-md">
-          <Link to={'/'}>
-            <div>
+        <div className="flex items-center gap-3 left-0  mt-1  rounded-md ">
+          <Link to={"/"}>
+            <div className=" hidden sm:block">
               <p className="text-cyan-400  bg-slate-700 p-2 rounded-lg font-semibold text-2xl truncate">
                 DesiDhun
               </p>
@@ -38,20 +38,19 @@ const LeftSidebar = () => {
           SignIn
         </Link>
       )}
-      <div className="flex  bg-white items-center mt-3 p-2 mr-2  rounded-lg">
-        <input type="text" placeholder="Search" className="outline-none" />
-        <MdSearch />
-      </div>
+    
       {/* Library Section */}
       <div className=" mt-3 ">
-        <p className="text-white font-semibold text-lg mb-2">Library</p>
+        <p className="text-white font-semibold text-lg mb-2  hidden sm:block">
+          Library
+        </p>
         <div className="">
           <Link
             to={"/"}
             className="p-2 text-2xl flex items-center gap-3 text-white opacity-70 hover:opacity-95 font-semibold ml-4 hover:bg-green-800 "
           >
             <MdHome />
-            <p className="text-lg">Home</p>
+            <p className="text-lg hidden sm:block">Home</p>
           </Link>
 
           <Link
@@ -59,7 +58,7 @@ const LeftSidebar = () => {
             className="p-2 text-2xl flex items-center gap-3 text-white opacity-70 hover:opacity-95 font-semibold ml-4 hover:bg-green-800"
           >
             <MdOutlineMic />
-            <p className="text-lg">Artist</p>
+            <p className="text-lg  hidden sm:block">Artist</p>
           </Link>
 
           <Link
@@ -67,7 +66,7 @@ const LeftSidebar = () => {
             className="p-2 text-2xl flex items-center gap-3 text-white opacity-70 hover:opacity-95 font-semibold ml-4 hover:bg-green-800"
           >
             <MdFeaturedPlayList />
-            <p className="text-lg">Playlist</p>
+            <p className="text-lg  hidden sm:block">Playlist</p>
           </Link>
 
           <Link
@@ -75,21 +74,23 @@ const LeftSidebar = () => {
             className="p-2 text-2xl flex items-center gap-3 text-white opacity-70 hover:opacity-95 font-semibold ml-4 hover:bg-green-800"
           >
             <MdMusicNote />
-            <p className="text-lg">Song</p>
+            <p className="text-lg  hidden sm:block">Song</p>
           </Link>
         </div>
       </div>
 
       {/* Discover Section */}
       <div className=" mt-10">
-        <p className="text-white font-semibold text-lg mb-2">Discover</p>
+        <p className="text-white font-semibold text-lg mb-2  hidden sm:block">
+          Discover
+        </p>
         <div className="">
           <Link
             to={"/store"}
             className="p-2 text-2xl flex items-center gap-3 text-white opacity-70 hover:opacity-95 font-semibold ml-4 hover:bg-green-800 "
           >
             <BiSolidCalendarStar />
-            <p className="text-lg">Store</p>
+            <p className="text-lg  hidden sm:block">Store</p>
           </Link>
 
           <Link
@@ -97,7 +98,7 @@ const LeftSidebar = () => {
             className="p-2 text-2xl flex items-center gap-3 text-white opacity-70 hover:opacity-95 font-semibold ml-4 hover:bg-green-800"
           >
             <FiRadio />
-            <p className="text-lg">Radio</p>
+            <p className="text-lg  hidden sm:block">Radio</p>
           </Link>
 
           <Link
@@ -105,7 +106,7 @@ const LeftSidebar = () => {
             className="p-2 text-2xl flex items-center gap-3 text-white opacity-70 hover:opacity-95 font-semibold ml-4 hover:bg-green-800"
           >
             <AiFillHeart />
-            <p className="text-lg">For You</p>
+            <p className="text-lg  hidden sm:block">For You</p>
           </Link>
 
           <Link
@@ -113,7 +114,7 @@ const LeftSidebar = () => {
             className="p-2 text-2xl flex items-center gap-3 text-white opacity-70 hover:opacity-95 font-semibold ml-4 hover:bg-green-800"
           >
             <CgBrowse />
-            <p className="text-lg">Browse</p>
+            <p className="text-lg  hidden sm:block">Browse</p>
           </Link>
         </div>
       </div>

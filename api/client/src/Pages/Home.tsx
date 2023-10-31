@@ -40,10 +40,10 @@ const {songList=[]}=useSelector((state:any)=>state.song)
   return loading ? (
     <h1>Loading...</h1>
   ) : (
-    <div className="p-6">
+    <div className="p-1 pb-32">
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 text-white">Recommended Music</h2>
-        <div className="flex w-full flex-wrap   gap-4">
+        <div className="flex flex-wrap  gap-4">
           {songList.length>0 &&
             songList.map((song: any) => (
               <div
@@ -54,7 +54,7 @@ const {songList=[]}=useSelector((state:any)=>state.song)
                 <img
                   src={song.cover}
                   alt={song.title}
-                  className="w-full h-32 object-cover mb-2 "
+                  className=" h-32 w-full object-cover mb-2 "
                 />
                 <p className=" font-semibold mb-1 truncate">{song.title}</p>
                 <p className="text-gray-500">{song.artist}</p>
