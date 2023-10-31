@@ -20,11 +20,11 @@ const App: React.FC = () => {
     <div className="bg-gradient-to-b from-red-900 to-slate-600">
       <div className="flex">
         {/* <!-- Left Sidebar --> */}
-        <div className=" h-screen fixed bg-gray-800 pr-10 pl-6 z-10">
+        <div className=" h-screen fixed bg-gray-800  pl-3 z-10">
           <LeftSidebar />
         </div>
 
-        <div className="   min-h-screen  pb-16 ml-[300px]  ">
+        <div className="   min-h-screen  pb-16 ml-[300px] flex flex-1 justify-center ">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/album" element={<Album />} />

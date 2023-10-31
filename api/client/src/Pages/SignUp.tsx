@@ -32,7 +32,7 @@ const SignUp:React.FC=()=> {
     console.log("signin", formData);
     console.log(apiUrl);
     try {
-      const res = await fetch(`/api/auth/signup`, {
+      const res = await fetch(`${apiUrl}/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,14 +49,14 @@ const SignUp:React.FC=()=> {
     }
   };
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-2/4">
       <h1 className="text-3xl text-center uppercase font-semibold mt-7 text-white">
         Sign Up
       </h1>
 
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col p-8 items-center justify-center gap-5 w-2/5"
+        className="flex flex-col p-8 items-center justify-center gap-5 w-full"
       >
         <input
           onChange={handleChange}
@@ -99,12 +99,12 @@ const SignUp:React.FC=()=> {
         >
           Sign Up
         </button>
-        <GoogleAuth/>
+        <GoogleAuth />
       </form>
 
       <div className="text-white">
         Have an account ?
-        <Link to={'/signin'}>
+        <Link to={"/signin"}>
           <span className="text-blue-400 cursor-pointer hover:underline ml-2">
             Sign In
           </span>

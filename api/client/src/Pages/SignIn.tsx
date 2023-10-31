@@ -3,7 +3,7 @@ import { useDispatch} from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { signInFailure, signInStart, signInSuccess } from "../Redux/features/authSlice";
 import GoogleAuth from "../Components/GoogleAuth";
-// const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
+const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
 
 interface FormData {
   email: string;
@@ -26,7 +26,7 @@ const  SignIn:React.FC=()=>{
       e.preventDefault();
       try {
         dispatch(signInStart());
-        const res = await fetch(`/api/auth/signin`, {
+        const res = await fetch(`${apiUrl}/api/auth/signin`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -46,14 +46,14 @@ const  SignIn:React.FC=()=>{
     };
 
   return (
-    <div className="flex flex-col items-center ">
+    <div className="flex flex-col items-center w-2/4 ">
       <h1 className="text-3xl text-center uppercase font-semibold mt-7 text-white">
         Sign In
       </h1>
 
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col p-8 items-center justify-center gap-5 w-3/6"
+        className="flex flex-col p-8 items-center justify-center gap-5 w-full"
       >
         <input
           onChange={handleChange}

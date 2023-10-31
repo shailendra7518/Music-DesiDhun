@@ -10,25 +10,26 @@ const LeftSidebar = () => {
   const {currentUser} = useSelector((state: any) => state.user)
   
   return (
-    <div className="bg-gray-800">
+    <div className="bg-gray-800 ">
       {/* Profile Section */}
 
       {currentUser ? (
-        <Link to={"/profile"}>
-          <div className="flex items-center bg-slate-700 mt-5 p-2 rounded-md">
+        <div className="flex   items-center gap-3 left-0  mt-1 p-2 rounded-md">
+          <Link to={'/'}>
+            <div>
+              <p className="text-cyan-400  bg-slate-700 p-2 rounded-lg font-semibold text-2xl truncate">
+                DesiDhun
+              </p>
+            </div>
+          </Link>
+          <Link to={"/profile"}>
             <img
               src={currentUser && currentUser.user.avatar} // Replace with actual profile image source
               alt="Profile"
               className="w-10 h-10 rounded-full mr-3 "
             />
-            <div>
-              <p className="text-white font-semibold text-sm">
-                {currentUser && currentUser.user.username}
-              </p>
-              <p className="text-gray-400 text-xs">Premium User</p>
-            </div>
-          </div>
-        </Link>
+          </Link>
+        </div>
       ) : (
         <Link
           className="text-white flex items-center justify-center bg-slate-700 mt-5 p-2 rounded-md"
@@ -37,9 +38,9 @@ const LeftSidebar = () => {
           SignIn
         </Link>
       )}
-      <div className="flex  bg-white items-center mt-3 p-2 text-lg rounded-lg">
-        <input type="text" placeholder="Search"  className="outline-none"/>
-        <MdSearch/>
+      <div className="flex  bg-white items-center mt-3 p-2 mr-2  rounded-lg">
+        <input type="text" placeholder="Search" className="outline-none" />
+        <MdSearch />
       </div>
       {/* Library Section */}
       <div className=" mt-3 ">

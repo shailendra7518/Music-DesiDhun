@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { signInSuccess} from "../Redux/features/authSlice";
 import { useNavigate } from "react-router-dom";
 
-// const apiUrl :string = import.meta.env.VITE_API_BASE_URL;
+const apiUrl :string = import.meta.env.VITE_API_BASE_URL;
 
 function GoogleAuth() {
   const Navigate = useNavigate();
@@ -17,7 +17,7 @@ function GoogleAuth() {
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider);
 console.log(result);
-      const res = await fetch(`/api/auth/google`, {
+      const res = await fetch(`${apiUrl}/api/auth/google`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

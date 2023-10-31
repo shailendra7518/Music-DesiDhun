@@ -1,5 +1,5 @@
 import React, { useRef, useState} from "react";
-// const apiUrl :string =import.meta.env.VITE_API_BASE_URL
+const apiUrl :string =import.meta.env.VITE_API_BASE_URL
 import {
   getStorage,
   uploadBytesResumable,
@@ -92,7 +92,7 @@ console.log(cover)
   const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       try {
-          const res = await fetch(`/api/songs/upload`, {
+          const res = await fetch(`${apiUrl}/api/songs/upload`, {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
@@ -117,9 +117,9 @@ console.log(cover)
        };
 
   return (
-    <div className=" flex flex-col items-center  content-center min-w-full  mt-10 p-4 bg-transparent border rounded-lg shadow-lg">
-      <h2 className=" text-white text-2xl mb-4">Upload a Song</h2>
-      <form onSubmit={handleSubmit}>
+    <div className=" flex flex-col items-center  content-center min-w-full  mt-10 p-4 bg-transparent rounded-lg">
+      <h2 className=" text-white text-2xl font-semibold mb-4">Upload a Song</h2>
+      <form onSubmit={handleSubmit} className="flex flex-col">
         <div className="mb-4   bg-white flex gap-1 rounded-lg p-2">
           <input
             type="text"
@@ -190,7 +190,7 @@ console.log(cover)
         </div>
         <button
           type="submit"
-          className="bg-slate-700  m-auto font-semibold text-white uppercase px-4 py-2 rounded hover:opacity-70"
+          className="bg-slate-700   font-semibold text-white uppercase px-4 py-2 rounded hover:opacity-70"
         >
           Upload Song
         </button>
