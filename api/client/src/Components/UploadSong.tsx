@@ -1,5 +1,5 @@
 import React, { useRef, useState} from "react";
-const apiUrl :string =import.meta.env.VITE_API_BASE_URL
+// const apiUrl :string =import.meta.env.VITE_API_BASE_URL
 import {
   getStorage,
   uploadBytesResumable,
@@ -92,7 +92,7 @@ console.log(cover)
   const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       try {
-          const res = await fetch(`${apiUrl}/api/songs/upload`, {
+          const res = await fetch(`/api/songs/upload`, {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',

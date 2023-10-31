@@ -32,7 +32,7 @@ const SignUp:React.FC=()=> {
     console.log("signin", formData);
     console.log(apiUrl);
     try {
-      const res = await fetch(`${apiUrl}/api/auth/signup`, {
+      const res = await fetch(`/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

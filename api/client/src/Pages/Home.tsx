@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from "react";
 import { useDispatch, useSelector} from "react-redux";
 import {startSong,addSongInList } from "../Redux/features/songSlice";
-const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
+// const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
     // HomePage.tsx
 
 const Home: React.FC = () => {
@@ -14,7 +14,7 @@ const {songList=[]}=useSelector((state:any)=>state.song)
    const fetchSongs = async () => {
      try {
        setLoading(true)
-       const res = await fetch(`${apiUrl}/api/songs/get`);
+       const res = await fetch(`/api/songs/get`);
        const data = await res.json();
        console.log(data);
        dispatch(addSongInList(data.songs))
