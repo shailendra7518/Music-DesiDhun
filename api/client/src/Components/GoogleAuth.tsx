@@ -44,7 +44,7 @@ console.log(result);
       onClick={handleGoogleClick}
       className="p-4 w-full rounded-md outline-none
             bg-cyan-900 font-semibold text-white hover:opacity-70
-            uppercase"
+            uppercase truncate"
     >
       Continue with Google
     </button>

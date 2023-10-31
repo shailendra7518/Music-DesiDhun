@@ -13,11 +13,15 @@ import Songs from "./Pages/Songs";
 import PrivateRoute from "./Components/PrivateRoute";
 import UploadSong from "./Components/UploadSong";
 import { useSelector } from "react-redux";
+import SearchBar from "./Components/SearchBar";
 
 const App: React.FC = () => {
   const {player}=useSelector((state:any)=>state.song)
   return (
-    <div className="bg-gradient-to-b from-red-900 to-slate-600">
+    <div className="bg-gradient-to-b from-red-900 to-slate-600 min-h-screen">
+      <div className=" flex w-full items-center fixed z-10 justify-center sm:hidden">
+        <SearchBar/>
+      </div>
       <div className="flex">
         {/* <!-- Left Sidebar --> */}
       

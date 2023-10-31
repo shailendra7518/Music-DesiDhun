@@ -6,11 +6,12 @@ import { FiRadio } from 'react-icons/fi';
 import { AiFillHeart } from 'react-icons/ai'
 import {CgBrowse} from 'react-icons/cg'
 import { useSelector } from "react-redux";
+import SearchBar from "./SearchBar";
 const LeftSidebar = () => {
   const {currentUser} = useSelector((state: any) => state.user)
   
   return (
-    <div className="bg-gray-800 pt-2  w-16 sm:w-auto sm:pl-2">
+    <div className="bg-gray-800 pt-2 min-h-screen  w-16 sm:w-auto sm:pl-2">
       {/* Profile Section */}
 
       {currentUser ? (
@@ -38,7 +39,10 @@ const LeftSidebar = () => {
           SignIn
         </Link>
       )}
-    
+      <div className="hidden sm:flex">
+        <SearchBar />
+      </div>
+
       {/* Library Section */}
       <div className=" mt-3 ">
         <p className="text-white font-semibold text-lg mb-2  hidden sm:block">

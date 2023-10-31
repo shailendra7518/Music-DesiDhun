@@ -46,7 +46,7 @@ const  SignIn:React.FC=()=>{
     };
 
   return (
-    <div className="flex flex-col items-center w-2/4 ">
+    <div className="flex flex-col items-center w-full sm:w-2/4  ">
       <h1 className="text-3xl text-center uppercase font-semibold mt-7 text-white">
         Sign In
       </h1>
@@ -79,7 +79,7 @@ const  SignIn:React.FC=()=>{
         />
         <button
           type="submit"
-          className="p-4 w-full rounded-md outline-none
+          className="p-4 w-full  rounded-md outline-none
             bg-slate-700 font-semibold text-white hover:opacity-70
             uppercase
             "

@@ -93,7 +93,7 @@ function Player() {
   }
   return (
     <>
-      <div className="absolute inset-x-0 bottom-0  flex flex-col items-center justify-between pl-2 pr-2 bg-gray-800 pb-2 sm:flex-row">
+      <div className="absolute inset-x-0 bottom-0 h-auto flex flex-col items-center justify-between pl-2 pr-2 bg-gray-800 pb-2 sm:flex-row sm:h-16">
         <div className="flex items-center justify-between  mb-2 w-full flex-row sm:mb-0 sm:w-1/3 sm:justify-start">
           <img
             src={currentSong.cover}
@@ -165,7 +165,7 @@ function Player() {
           </div>
         </div>
 
-        <div className="flex items-center w-1/3 justify-end hidden sm:block">
+        <div className="hidden  items-center w-1/3 justify-end  sm:flex">
           <button
             className="text-white text-2xl"
             onClick={() => setIsMute(!isMute)}

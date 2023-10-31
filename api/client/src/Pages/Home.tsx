@@ -40,7 +40,7 @@ const {songList=[]}=useSelector((state:any)=>state.song)
   return loading ? (
     <h1>Loading...</h1>
   ) : (
-    <div className="p-1 pb-32">
+    <div className="p-2 pb-32 mt-16 sm:mt-0">
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 text-white">Recommended Music</h2>
         <div className="flex flex-wrap  gap-4">
