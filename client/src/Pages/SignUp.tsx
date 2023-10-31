@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import GoogleAuth from "../Components/GoogleAuth";
 import { useSelector } from "react-redux";
 const apiUrl: string = import.meta.env.VITE_API_BASE_URL;

@@ -14,7 +14,6 @@ const  SignIn:React.FC=()=>{
   const initialState: FormData = {email: "",password: "",};
   const [formData, setFormData] = useState(initialState);
   const Navigate = useNavigate();
-  const { currentUser } = useSelector((state:any) => state.user);
   const dispatch = useDispatch();
 
 

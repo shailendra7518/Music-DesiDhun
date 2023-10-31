@@ -1,7 +1,7 @@
-import React from "react";
+
 import { Link } from "react-router-dom";
 import { MdFeaturedPlayList, MdOutlineMic, MdMusicNote ,MdHome ,MdSearch} from "react-icons/md";
-import { BiPhotoAlbum, BiSolidCalendarStar } from "react-icons/bi";
+import {BiSolidCalendarStar } from "react-icons/bi";
 import { FiRadio } from 'react-icons/fi';
 import { AiFillHeart } from 'react-icons/ai'
 import {CgBrowse} from 'react-icons/cg'

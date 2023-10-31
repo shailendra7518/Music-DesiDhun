@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
-const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
 const Songs: React.FC = () => {
   // const [songs, setSongs] = useState<any>([]);
   // const {currentSong,isPlaying}=useSelector((state:any)=>state.song)

@@ -1,8 +1,8 @@
-import React from "react";
+
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import  app  from "../firebase/firebase";
 import { useDispatch } from "react-redux";
-import { signInSuccess,signInStart,signInFailure } from "../Redux/features/authSlice";
+import { signInSuccess} from "../Redux/features/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const apiUrl :string = import.meta.env.VITE_API_BASE_URL;

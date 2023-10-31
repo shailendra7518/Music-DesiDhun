@@ -15,7 +15,7 @@ import UploadSong from "./Components/UploadSong";
 import { useSelector } from "react-redux";
 
 const App: React.FC = () => {
-  const {isPlaying,player}=useSelector((state:any)=>state.song)
+  const {player}=useSelector((state:any)=>state.song)
   return (
     <div className="bg-gradient-to-b from-red-900 to-slate-600">
       <div className="flex">

@@ -1,4 +1,4 @@
-import React, { useRef, useState ,useEffect} from "react";
+import React, { useRef, useState} from "react";
 const apiUrl :string =import.meta.env.VITE_API_BASE_URL
 import {
   getStorage,
@@ -30,7 +30,6 @@ const UploadSong: React.FC = () => {
     const {currentUser}=useSelector((state:any)=>state.user)
   const [file, setFile] = useState<File | null>(null);
     const [cover, setCover] = useState<File | null>(null);
-     const coverRef = useRef<HTMLInputElement>(null);
      const fileRef = useRef<HTMLInputElement>(null);
      const [filePerc, setFilePerc] = useState(0);
      const [fileUploadError, setFileUploadError] = useState(false);

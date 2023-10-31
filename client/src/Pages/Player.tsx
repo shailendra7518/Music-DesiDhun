@@ -1,5 +1,4 @@
 import { useState, useEffect,useRef } from 'react'
-const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
 import { FaPlay } from 'react-icons/fa'
 import { FaPause } from "react-icons/fa6";
 import { TbPlayerTrackNextFilled, TbPlayerTrackPrevFilled } from 'react-icons/tb'
