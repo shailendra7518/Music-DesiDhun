@@ -10,11 +10,12 @@ const [loading,setLoading]=useState(false)
   
 const {songList=[]}=useSelector((state:any)=>state.song)
 
- useEffect(() => {
+  useEffect(() => {
+   console.log("is this getting called")
    const fetchSongs = async () => {
      try {
        setLoading(true)
-       const res = await fetch(`/api/songs/get`);
+       const res = await fetch(`/api/songs/get`,);
        const data = await res.json();
        console.log(data);
        dispatch(addSongInList(data.songs))

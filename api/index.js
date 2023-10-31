@@ -4,14 +4,14 @@ const authRouter = require("./Routes/auth.route");
 const songRouter = require("./Routes/song.route");
 const playlistRouter = require("./Routes/playlist.route");
 const errorMiddleware = require("./Middlewares/error.middleware");
-const path = require("path");
+// const path = require("path");
 const cors = require("cors");
 require("dotenv").config();
 const app = express();
-app.use(express.static(path.join(__dirname, "/client/dist")));
-app.use("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
-});
+// app.use(express.static(path.join(__dirname, "/client/dist")));
+// app.use("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+// });
 
 app.use(cors());
 app.use(express.json());
