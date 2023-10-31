@@ -9,7 +9,7 @@ const cors = require("cors");
 require("dotenv").config();
 const app = express();
 app.use(express.static(path.join(__dirname, "/client/dist")));
-app.get("*", (req, res) => {
+app.use("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
 
@@ -18,8 +18,7 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/songs", songRouter);
 app.use("/api/playlists", playlistRouter);
-console.log(path.join(__dirname, "/client/dist"));
-// app.use(errorMiddleware);
+app.use(errorMiddleware);
 
 const port = process.env.PORT || 3000;
 
