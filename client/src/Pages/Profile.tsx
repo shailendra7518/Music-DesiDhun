@@ -1,13 +1,9 @@
-import {useRef, useState } from "react";
+import {useRef } from "react";
 
 import { Link } from "react-router-dom";
 
 function Profile() {
   const fileRef = useRef(null);
-  const [file, setFile] = useState(undefined);
-  const [filePerc, setFilePerc] = useState(0);
-  const [fileUploadError, setFileUploadError] = useState(false);
-  const [formData, setformData] = useState({});
 
   return (
     <div className="p-3 max-w-lg flex flex-col  mx-auto">
@@ -20,17 +16,7 @@ function Profile() {
           alt="profile"
           className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"
         />
-        <p className="text-sm self-center">
-          {fileUploadError ? (
-            <span className="text-read-700">Error image upload</span>
-          ) : filePerc > 0 && filePerc < 100 ? (
-            <span className="text-slate-700">{`Uploading  ${filePerc}%`}</span>
-          ) : filePerc == 100 ? (
-            <span className="text-green-700">Image successfully uploaded</span>
-          ) : (
-            ""
-          )}
-        </p>
+       
 
         <input
           type="text"

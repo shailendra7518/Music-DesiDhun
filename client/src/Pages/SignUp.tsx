@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleAuth from "../Components/GoogleAuth";
-import { useSelector } from "react-redux";
 const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
 interface FormData {
   username: string;
@@ -16,7 +15,6 @@ const SignUp:React.FC=()=> {
     email: "",
     password: "",
   };
-  const {currentUser}=useSelector((state:any)=>state.user)
   const [formData, setFormData] = useState(initialState);
   const Navigate = useNavigate();
  
@@ -43,6 +41,7 @@ const SignUp:React.FC=()=> {
       });
 
       const data = await res.json();
+      console.log(data)
         setFormData(initialState);
         Navigate('/signin')
     } catch (error) {
