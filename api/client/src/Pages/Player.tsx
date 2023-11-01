@@ -7,12 +7,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import ReactAudioPlayer from "react-audio-player";
 import { pauseSong,playSong, startSong } from '../Redux/features/songSlice';
 function Player() {
-    const { currentSong, isPlaying, songList=[] } = useSelector(
+   
+    const { currentSong, isPlaying, songList } = useSelector(
       (state: any) => state.song
-    );
+  );
+  const [isPlay,setIsPlay]=useState(false)
   const [volume, setVolume] = useState(50);
   const [isMute, setIsMute] = useState(false) 
-  const [songIndex,setSongIndex]=useState(songList.length/2 || 0)
+  const [songIndex,setSongIndex]=useState(Math.round(songList.length/2) || 0)
   const [currentTime, setCurrentTime] = useState({
     minutes: 0,
     seconds: 0,
@@ -37,8 +39,9 @@ function Player() {
  const handleNext = () => {
     // Logic for playing the next audio track
    // Replace this with your own logic
- console.log('worked')
+ console.log('next song', songIndex)
    if (songIndex + 1 < songList.length) {
+     
      
      dispatch(startSong(songList[songIndex + 1]));
      setSongIndex(songIndex+1)
@@ -46,7 +49,7 @@ function Player() {
   };
 
   const handlePrevious = () => {
-     console.log("worked");
+     console.log("previus song",songIndex);
       if (songIndex - 1 >=0) {
         dispatch(startSong(songList[songIndex - 1]));
         setSongIndex(songIndex-1)
@@ -57,7 +60,7 @@ function Player() {
 
  
   const handleEnded = () => {
-    console.log('ended')
+    console.log('song ended')
      if (songIndex + 1 < songList.length) {
        handleNext();
      } else {
@@ -66,12 +69,14 @@ function Player() {
 }
 
   const togglePlay = () => {
-    if (isPlaying) {
+    if (isPlaying || isPlay) {
       dispatch(pauseSong())     
       audioRef.current.audioEl.current.pause();
+      setIsPlay(false)
     } else {
       dispatch(playSong());
-         audioRef.current.audioEl.current.play();
+      audioRef.current.audioEl.current.play();
+      setIsPlay(true)
     }
    
   };
@@ -96,15 +101,15 @@ function Player() {
       <div className="absolute inset-x-0 bottom-0 h-auto flex flex-col items-center justify-between pl-2 pr-2 bg-gray-800 pb-2 sm:flex-row sm:h-16">
         <div className="flex items-center justify-between  mb-2 w-full flex-row sm:mb-0 sm:w-1/3 sm:justify-start">
           <img
-            src={currentSong.cover}
+            src={ currentSong && currentSong.cover}
             alt="Album Cover"
             className="w-12 h-12 rounded mr-4"
           />
           <div>
             <p className="text-white font-semibold truncate w-44">
-              {currentSong.title}
+              { currentSong && currentSong.title}
             </p>
-            <p className="text-gray-400 ">{currentSong.artist}</p>
+            <p className="text-gray-400 ">{ currentSong &&currentSong.artist}</p>
           </div>
           <div className='flex   sm:hidden '>
             <button
@@ -137,7 +142,7 @@ function Player() {
               className="bg-red-500 p-4 rounded-3xl text-2xl  text-white"
               onClick={togglePlay}
             >
-              {isPlaying ? <FaPause /> : <FaPlay />}
+              {isPlaying ||isPlay ? <FaPause /> : <FaPlay />}
             </button>
             <button
               className="text-white hover:opacity-70 cursor-pointer text-2xl disabled:opacity-40 "
@@ -186,7 +191,7 @@ function Player() {
         <div className="hidden">
           <ReactAudioPlayer
             ref={audioRef}
-            src={currentSong.file}
+            src={currentSong &&currentSong.file}
             autoPlay
             controls
             loop={false}

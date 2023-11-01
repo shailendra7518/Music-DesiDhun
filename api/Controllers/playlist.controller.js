@@ -29,8 +29,9 @@ const playlistCongroller = {
 
         try {
             // Check if the name is provided
+            console.log(req.body)
             if (!req.body.name || !req.body.creater_ref) {
-      return res.status(400).json({ message: 'Name is required for creating a playlist.' });
+      return res.status(400).json({ message: 'Name and creater_ref is required for creating a playlist.' });
     }
 
     // Create a new playlist
