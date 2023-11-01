@@ -1,13 +1,35 @@
 import { useDispatch, useSelector } from "react-redux";
 import { startSong } from "../Redux/features/songSlice";
-  
+import { useEffect } from "react";
+const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
 const Songs =() => {
   const { songList } = useSelector((state: any) => state.song)
+  const {currentUser}=useSelector((state:any)=>state.user)
   const dispatch = useDispatch();
 
   const handlePlay = (song:any) => {
     dispatch(startSong(song));
-    }
+  }
+  const addSongInPlalist = () => {
+          console.log("selected")
+
+  }
+
+  useEffect(() => {
+    const fetchPlaylists = async () => {
+      try {
+        const res = await fetch(`${apiUrl}/api/plalists/getplaylists/${currentUser.user._id}`)
+        const data = await res.json();
+        console.log(data)
+             
+      } catch (error) {
+        console.log(error)
+           }
+         }
+  })
+
+
+
   return (
     <div className="flex flex-col items-start gap-4 p-4 mt-10 w-full pb-44">
       <div className="hidden flex-col bg-slate-700 text-white font-semibold uppercase content-start gap-2 w-full sm:w-3/4 justify-between rounded-lg p-4 sm:flex-row sm:flex">
