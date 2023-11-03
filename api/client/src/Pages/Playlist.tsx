@@ -1,27 +1,14 @@
 import React,{useState} from 'react'
 import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
+
 const apiUrl: string =import.meta.env.VITE_API_BASE_URL;
 function Playlist() {
+  const Navigate = useNavigate();
   const [playListName,setPlayListName]=useState('')
   const { currentUser } = useSelector((state: any) => state.user)
     const { playList } = useSelector((state: any) => state.song);
-   const playlists = [
-     {
-       _id: 1,
-       name: "Playlist 1",
-       cover: "http://via.placeholder.com/640x360",
-       creater:'you'
-     },
-     {
-       _id: 2,
-       name: "Playlist 2",
-       cover: "http://via.placeholder.com/640x360",
-       creater:'you'
-     },
-     // Add more playlists as needed
-   ];
-
-
 
 // console.log(currentUser)
 
@@ -43,16 +30,19 @@ function Playlist() {
 
       const data = await res.json();
       console.log(data)
+      toast.success(`Playlist ${playListName} created`)
+      
       setPlayListName('')
+     Navigate("/")
     } catch (error) {
+
       setPlayListName('')
+      toast.error("Failed in Creating plalist")
       console.log(error)
     }
   }
+console.log(playList)
 
-   const handlePlayListStart = (list: any) => {
-    
-   };
 
   return (
     <div className=" flex flex-col text-center  w-full sm:w-auto">
@@ -82,36 +72,33 @@ function Playlist() {
         <div className="flex flex-wrap gap-4 items-center justify-center">
           {playList.length > 0 &&
             playList.map((list: any) => (
-              <div
-                onClick={() => handlePlayListStart(list)}
-                key={list.playlist._id}
-                className="bg-rose-100 w-60 p-4 shadow-lg rounded-lg mb-4 cursor-pointer transform hover:scale-105 transition-transform"
-              >
-                <img
-                  src={
-                    list.playlist.songs.length > 0
-                      ? list.playlist.songs[0].cover
-                      : list.creater.avatar
-                  }
-                  alt={list.playlist.name}
-                  className=" h-32 w-full object-cover mb-2 "
-                />
-                <p className=" font-semibold mb-1 truncate">
-                  {list.playlist.name}{" "}
-                  <span className="text-red-600 ml-2">
-                    Songs:{" "}
-                    <span className="text-green-400">
-                      {list.playlist.songs.length}
+              <Link to={`/playlist/${list.playlist._id}`}>
+                <div
+                  key={list.playlist._id}
+                  className="bg-rose-100 w-60 p-4 shadow-lg rounded-lg mb-4 cursor-pointer transform hover:scale-105 transition-transform text-left"
+                >
+                  <img
+                    src={`https://placehold.co/600x400?text=${list?.playlist.name}`}
+                    alt={list.playlist.name}
+                    className=" h-32 w-full object-cover mb-2 "
+                  />
+                  <p className=" font-semibold mb-1 truncate">
+                    {list.playlist.name}{" "}
+                    <span className="text-red-600 ml-2">
+                      Songs:{" "}
+                      <span className="text-green-400">
+                        {list.playlist.songs.length}
+                      </span>
                     </span>
-                  </span>
-                </p>
-                <p className=" font-semibold mb-1 truncate">
-                  Created By
-                  <span className="text-red-600 ml-2">
-                    {list.creater.username}
-                  </span>
-                </p>
-              </div>
+                  </p>
+                  <p className=" font-semibold mb-1 truncate">
+                    Created By
+                    <span className="text-red-600 ml-2">
+                      {list.creater.username}
+                    </span>
+                  </p>
+                </div>
+              </Link>
             ))}
         </div>
       </div>

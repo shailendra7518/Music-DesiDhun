@@ -1,7 +1,6 @@
 
 import { Link } from "react-router-dom";
 import { MdFeaturedPlayList, MdOutlineMic, MdMusicNote, MdHome } from "react-icons/md";
-import Cookies from 'js-cookie'
 import {BiSolidCalendarStar } from "react-icons/bi";
 import { FiRadio } from 'react-icons/fi';
 import { AiFillHeart } from 'react-icons/ai'

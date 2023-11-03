@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { startSong } from "../Redux/features/songSlice";
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
+import { toast } from 'react-toastify';
 const Songs =() => {
   const { songList ,playList} = useSelector((state: any) => state.song)
   const { currentUser } = useSelector((state: any) => state.user)
@@ -12,8 +13,30 @@ const Songs =() => {
   const handlePlay = (song:any) => {
     dispatch(startSong(song));
   }
-  const addSongInPlalist = () => {
-          console.log("selected")
+  const addSongInPlalist = async(e:React.ChangeEvent<HTMLSelectElement>) => {
+    
+    const songId = e.target.id;
+    const playlistId = e.target.value
+   
+    try {
+      const res = await fetch(`${apiUrl}/api/playlists/addtoplaylist`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'token':currentUser.token
+        },
+        body: JSON.stringify({ playlistId: playlistId, songId: songId })
+        
+      })
+      const data = await res.json();
+      toast.success(`Song added in playlist`)
+        console.log(data)
+    } catch (error) {
+      toast.error("Failed to add in playlist")
+      
+      }
+    
+
 
   }
 
@@ -25,7 +48,7 @@ const Songs =() => {
 
   return (
     <div className="flex flex-col items-start gap-4 p-4 mt-10 w-full pb-44">
-      <div className="hidden flex-col bg-slate-700 text-white font-semibold uppercase content-start gap-2 w-full sm:w-3/4 justify-between rounded-lg p-4 sm:flex-row sm:flex">
+      <div className="hidden flex-col bg-slate-700 text-white font-semibold uppercase content-start gap-2 w-full md:w-3/4 sm:w-2/4 justify-between rounded-lg p-4 sm:flex-row sm:flex ">
         <p className="truncate">Cover</p>
         <p className="truncate">Title</p>
         <p className="truncate">Artist</p>
@@ -38,7 +61,7 @@ const Songs =() => {
           <div
             key={song._id}
             onClick={() => handlePlay(song)}
-            className="flex flex-col bg-white items-start gap-2 w-full sm:w-3/4 justify-between rounded-lg p-4 sm:flex-row sm:items-center font-semibold cursor-pointer hover:bg-slate-200 transform hover:scale-x-90 transition-transform"
+            className="flex flex-col bg-white items-start gap-2 w-full md:w-3/4 sm:w-2/4 justify-between rounded-lg p-4 sm:flex-row sm:items-center font-semibold cursor-pointer hover:bg-slate-200 transform hover:scale-x-90 transition-transform"
           >
             <img
               src={song.cover}
@@ -47,7 +70,6 @@ const Songs =() => {
             />
 
             <p className="truncate w-44">
-              {" "}
               <span className="text-green-800 mr-3  sm:hidden">Title</span>
               {song.title}
             </p>
@@ -68,14 +90,14 @@ const Songs =() => {
                 Add to Playlist
               </span>
               <select
-                name=""
-                id=""
+                onChange={addSongInPlalist}
+                id={song._id}
                 className="text-white bg-slate-700 outline-none rounded-lg p-1"
               >
-                <option className="bg-slate-700 text-white" value="">Select-Playlist</option>
+                <option className="bg-slate-700 text-white" value="" id="">Select-Playlist</option>
                 {myPlaylList.length > 0 && myPlaylList.map((list: any) => (
                   
-                  <option>{ list.playlist.name}</option>
+                  <option key={list.playlist._id} value={list.playlist._id}  >{ list.playlist.name}</option>
 
 
                 ))}

@@ -1,6 +1,6 @@
 import {useRef} from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { signOut } from "../Redux/features/authSlice";
 function Profile() {
@@ -9,6 +9,7 @@ function Profile() {
   const {currentUser}=useSelector((state:any)=>state.user)
   const handleSignOut = () => {
     dispatch(signOut())
+    toast.warn("User Logged Out")
   }
   return (
     <div className="p-3   flex flex-col w-2/4">

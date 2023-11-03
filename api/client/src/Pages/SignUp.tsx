@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleAuth from "../Components/GoogleAuth";
 const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
+ import { toast } from "react-toastify";
 interface FormData {
   username: string;
   email: string;
@@ -23,13 +24,10 @@ const SignUp:React.FC=()=> {
   };
 
 
-
-
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${apiUrl}/api/auth/signup`, {
+      await fetch(`${apiUrl}/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,11 +35,11 @@ const SignUp:React.FC=()=> {
         body: JSON.stringify(formData),
       });
 
-      const data = await res.json();
-    console.log(data)
       setFormData(initialState);
+      toast.success("User Signed Up")
         Navigate('/signin')
     } catch (error) {
+      toast.error("Failed in SignUp")
       console.log(error);
     }
   };

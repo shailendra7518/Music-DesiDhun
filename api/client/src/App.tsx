@@ -18,31 +18,31 @@ import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { signOut } from "./Redux/features/authSlice";
+import SingleSong from "./Components/SingleSong";
+import SinglePlayList from "./Pages/SinglePlayList";
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
-  const token = Cookies.get('token') 
-  
+  const token = Cookies.get("token");
+
   useEffect(() => {
     if (!token) {
-       dispatch(signOut())
-     }
-   },[])
+      dispatch(signOut());
+    }
+  }, []);
 
-
-  const {player}=useSelector((state:any)=>state.song)
+  const { player } = useSelector((state: any) => state.song);
   return (
     <div className="bg-gradient-to-b from-red-900 to-slate-600 min-h-screen">
       <div className=" flex w-full items-center fixed z-10 justify-center sm:hidden">
-        <SearchBar/>
+        <SearchBar />
       </div>
       <div className="flex">
         {/* <!-- Left Sidebar --> */}
-      
-          <LeftSidebar />
-       
 
-        <div className="flex flex-1 justify-center">
+        <LeftSidebar />
+
+        <div className="flex flex-1 justify-center pb-40">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/album" element={<Album />} />
@@ -51,9 +51,11 @@ const App: React.FC = () => {
             <Route path="/browse" element={<Browse />} />
             <Route path="/playlist" element={<Playlist />} />
 
+            <Route path="/playlist/:id" element={<SinglePlayList />} />
             <Route path="/artist" element={<Artist />} />
             <Route path="/player" element={<Player />} />
             <Route path="/song" element={<Songs />} />
+            <Route path="/song/:id" element={<SingleSong />} />
             <Route element={<PrivateRoute />}>
               <Route path="/profile" element={<Profile />} />
               <Route path="/upload" element={<UploadSong />} />
@@ -67,6 +69,6 @@ const App: React.FC = () => {
       </div>
     </div>
   );
-}
+};
 
 export default App;

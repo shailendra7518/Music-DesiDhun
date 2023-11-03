@@ -7,6 +7,7 @@ import {
   signInSuccess,
 } from "../Redux/features/authSlice";
 import Cookies from "js-cookie";
+ import { toast } from "react-toastify";
 
 import GoogleAuth from "../Components/GoogleAuth";
 const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
@@ -43,9 +44,11 @@ const SignIn: React.FC = () => {
       // const inMinutes = new Date(new Date().getTime() + 1 * 60 * 1000);
       Cookies.set("token", data.token, { expires: 2 });
       dispatch(signInSuccess(data));
+      toast.success("User Logged In ")
       Navigate("/");
     } catch (error) {
-      dispatch(signInFailure(error));
+      dispatch(signInFailure(error)); 
+      toast.error("Failed in Login")
       console.log(error);
     }
   };
