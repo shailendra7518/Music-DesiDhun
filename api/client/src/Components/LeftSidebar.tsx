@@ -1,6 +1,7 @@
 
 import { Link } from "react-router-dom";
-import { MdFeaturedPlayList, MdOutlineMic, MdMusicNote ,MdHome ,MdSearch} from "react-icons/md";
+import { MdFeaturedPlayList, MdOutlineMic, MdMusicNote, MdHome } from "react-icons/md";
+import Cookies from 'js-cookie'
 import {BiSolidCalendarStar } from "react-icons/bi";
 import { FiRadio } from 'react-icons/fi';
 import { AiFillHeart } from 'react-icons/ai'
@@ -23,13 +24,15 @@ const LeftSidebar = () => {
               </p>
             </div>
           </Link>
-          <Link to={"/profile"}>
-            <img
-              src={currentUser && currentUser.user.avatar} // Replace with actual profile image source
-              alt="Profile"
-              className="w-10 h-10 rounded-full mr-3 "
-            />
-          </Link>
+         
+            <Link to={"/profile"} className="cursor-pointer">
+              <img
+                src={currentUser && currentUser.user.avatar}
+                alt="Profile"
+                className="w-10 h-10 rounded-full mr-3 "
+              />
+            </Link>
+         
         </div>
       ) : (
         <Link

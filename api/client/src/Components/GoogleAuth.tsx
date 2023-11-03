@@ -4,12 +4,16 @@ import  app  from "../firebase/firebase";
 import { useDispatch } from "react-redux";
 import { signInSuccess} from "../Redux/features/authSlice";
 import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie'
 
 const apiUrl :string = import.meta.env.VITE_API_BASE_URL;
 
 function GoogleAuth() {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
+
+
+
 
   const handleGoogleClick = async () => {
     try {
@@ -29,7 +33,9 @@ console.log(result);
         }),
       });
 
-        const data = await res.json();
+      const data = await res.json();
+      // const inMinutes = new Date(new Date().getTime() + 1 * 60 * 1000);
+      Cookies.set('token',data.token,{expires:2 })
       dispatch(signInSuccess(data));
           Navigate("/");
         

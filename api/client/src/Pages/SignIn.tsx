@@ -1,7 +1,13 @@
 import { useState } from "react";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { signInFailure, signInStart, signInSuccess } from "../Redux/features/authSlice";
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from "../Redux/features/authSlice";
+import Cookies from "js-cookie";
+
 import GoogleAuth from "../Components/GoogleAuth";
 const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
 
@@ -10,40 +16,39 @@ interface FormData {
   password: string;
 }
 
-const  SignIn:React.FC=()=>{
-  const initialState: FormData = {email: "",password: "",};
+const SignIn: React.FC = () => {
+  const initialState: FormData = { email: "", password: "" };
   const [formData, setFormData] = useState(initialState);
   const Navigate = useNavigate();
   const dispatch = useDispatch();
-
-
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      try {
-        dispatch(signInStart());
-        const res = await fetch(`${apiUrl}/api/auth/signin`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      dispatch(signInStart());
+      const res = await fetch(`${apiUrl}/api/auth/signin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-        const data = await res.json();
-        setFormData(initialState);
-        dispatch(signInSuccess(data))
-        Navigate('/')
-
-      } catch (error) {
-        dispatch(signInFailure(error))
-        console.log(error);
-      }
-    };
+      const data = await res.json();
+      setFormData(initialState);
+      // const inMinutes = new Date(new Date().getTime() + 1 * 60 * 1000);
+      Cookies.set("token", data.token, { expires: 2 });
+      dispatch(signInSuccess(data));
+      Navigate("/");
+    } catch (error) {
+      dispatch(signInFailure(error));
+      console.log(error);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center w-full sm:w-2/4  ">
@@ -86,11 +91,11 @@ const  SignIn:React.FC=()=>{
         >
           Sign In
         </button>
-        <GoogleAuth/>
+        <GoogleAuth />
       </form>
       <div className="text-white">
         Don't have an account ?
-        <Link to={'/signup'}>
+        <Link to={"/signup"}>
           <span className="text-blue-400 cursor-pointer hover:underline ml-2">
             Sign Up
           </span>
@@ -98,6 +103,6 @@ const  SignIn:React.FC=()=>{
       </div>
     </div>
   );
-}
+};
 
 export default SignIn;

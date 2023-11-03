@@ -36,7 +36,19 @@ const songController = {
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
-}
+  },
+  getCookie: async (req, res) => {
+    console.log(req.headers)
+    try {
+      const cookieValue = req.headers.token;
+
+      res.status(200).json(cookieValue)
+      
+    } catch (error) {
+       console.log(error)
+    }
+
+  }
 
 
 

@@ -28,9 +28,6 @@ const SignUp:React.FC=()=> {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log("signin", formData);
-    console.log(apiUrl);
     try {
       const res = await fetch(`${apiUrl}/api/auth/signup`, {
         method: "POST",
@@ -41,8 +38,8 @@ const SignUp:React.FC=()=> {
       });
 
       const data = await res.json();
-      console.log(data)
-        setFormData(initialState);
+    console.log(data)
+      setFormData(initialState);
         Navigate('/signin')
     } catch (error) {
       console.log(error);

@@ -3,6 +3,7 @@ const connectDB = require("./config/db");
 const authRouter = require("./Routes/auth.route");
 const songRouter = require("./Routes/song.route");
 const playlistRouter = require("./Routes/playlist.route");
+const cookieParser = require("cookie-parser");
 const errorMiddleware = require("./Middlewares/error.middleware");
 const path = require("path");
 const cors = require("cors");
@@ -12,9 +13,11 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use("/api/auth", authRouter);
 app.use("/api/songs", songRouter);
 app.use("/api/playlists", playlistRouter);
+
 app.use(errorMiddleware);
 
 app.use(express.static(path.join(__dirname, "/client/dist")));

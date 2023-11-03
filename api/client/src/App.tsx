@@ -14,8 +14,22 @@ import PrivateRoute from "./Components/PrivateRoute";
 import UploadSong from "./Components/UploadSong";
 import { useSelector } from "react-redux";
 import SearchBar from "./Components/SearchBar";
+import Cookies from "js-cookie";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { signOut } from "./Redux/features/authSlice";
 
 const App: React.FC = () => {
+  const dispatch = useDispatch();
+  const token = Cookies.get('token') 
+  
+  useEffect(() => {
+    if (!token) {
+       dispatch(signOut())
+     }
+   },[])
+
+
   const {player}=useSelector((state:any)=>state.song)
   return (
     <div className="bg-gradient-to-b from-red-900 to-slate-600 min-h-screen">

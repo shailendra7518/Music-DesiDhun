@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { startSong } from "../Redux/features/songSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
 const Songs =() => {
-  const { songList } = useSelector((state: any) => state.song)
-  const {currentUser}=useSelector((state:any)=>state.user)
+  const { songList ,playList} = useSelector((state: any) => state.song)
+  const { currentUser } = useSelector((state: any) => state.user)
+  
+  const [myPlaylList,setMyPlayList]=useState([])
   const dispatch = useDispatch();
 
   const handlePlay = (song:any) => {
@@ -16,18 +18,9 @@ const Songs =() => {
   }
 
   useEffect(() => {
-    const fetchPlaylists = async () => {
-      try {
-        const res = await fetch(`${apiUrl}/api/plalists/getplaylists/${currentUser.user._id}`)
-        const data = await res.json();
-        console.log(data)
-             
-      } catch (error) {
-        console.log(error)
-           }
-         }
-  })
 
+    setMyPlayList(playList.filter((list:any)=>(list.playlist.creater_ref===currentUser.user._id)))
+  },[])
 
 
   return (
@@ -43,8 +36,9 @@ const Songs =() => {
       {songList &&
         songList.map((song: any) => (
           <div
+            key={song._id}
             onClick={() => handlePlay(song)}
-            className="flex flex-col bg-white items-start gap-2 w-full sm:w-3/4 justify-between rounded-lg p-4 sm:flex-row sm:items-center font-semibold cursor-pointer hover:bg-slate-700 hover:text-white"
+            className="flex flex-col bg-white items-start gap-2 w-full sm:w-3/4 justify-between rounded-lg p-4 sm:flex-row sm:items-center font-semibold cursor-pointer hover:bg-slate-200 transform hover:scale-x-90 transition-transform"
           >
             <img
               src={song.cover}
@@ -78,10 +72,13 @@ const Songs =() => {
                 id=""
                 className="text-white bg-slate-700 outline-none rounded-lg p-1"
               >
-                <option className="bg-slate-700 text-white" value="">Add</option>
-                <option value="">plalist 1</option>
-                <option value="plalist">plalist 2</option>
-                <option value="">plalist 3</option>
+                <option className="bg-slate-700 text-white" value="">Select-Playlist</option>
+                {myPlaylList.length > 0 && myPlaylList.map((list: any) => (
+                  
+                  <option>{ list.playlist.name}</option>
+
+
+                ))}
               </select>
             </div>
           </div>
