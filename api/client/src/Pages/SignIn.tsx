@@ -10,7 +10,7 @@ import Cookies from "js-cookie";
  import { toast } from "react-toastify";
 
 import GoogleAuth from "../Components/GoogleAuth";
-const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
+// const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
 
 interface FormData {
   email: string;
@@ -31,7 +31,7 @@ const SignIn: React.FC = () => {
     e.preventDefault();
     try {
       dispatch(signInStart());
-      const res = await fetch(`${apiUrl}/api/auth/signin`, {
+      const res = await fetch(`/api/auth/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

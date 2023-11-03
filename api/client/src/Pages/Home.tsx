@@ -1,7 +1,8 @@
-import React,{useEffect,useState} from "react";
+import {useEffect,useState} from "react";
 import { useDispatch, useSelector} from "react-redux";
 import { startSong, addSongInList, addInPlaylist } from "../Redux/features/songSlice";
 import { Link } from "react-router-dom";
+
 const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
 // HomePage.tsx
 
@@ -56,17 +57,21 @@ const {songList=[],playList=[]}=useSelector((state:any)=>state.song)
 
   }
 
-  console.log(playList)
   
   return loading ? (
     <h1>Loading...</h1>
   ) : (
-    <div className="p-2 pb-32 mt-16 sm:mt-0">
+      <div className="p-2 pb-32 mt-16 sm:mt-0">
+        {/* <Slider {...settings}>
+          <h1>1</h1>
+          <h1>2</h1>
+        </Slider> */}
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 text-white">
           Recommended Music
         </h2>
-        <div className="flex flex-wrap  gap-4">
+          <div className="flex flex-wrap  gap-4">
+            
           {songList.length > 0 &&
             songList.map((song: any) => (
               <div

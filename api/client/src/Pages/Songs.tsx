@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { startSong } from "../Redux/features/songSlice";
 import React,{ useEffect, useState } from "react";
-const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
+// const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
 import { toast } from 'react-toastify';
 const Songs =() => {
   const { songList ,playList} = useSelector((state: any) => state.song)
@@ -19,7 +19,7 @@ const Songs =() => {
     const playlistId = e.target.value
    
     try {
-      const res = await fetch(`${apiUrl}/api/playlists/addtoplaylist`, {
+      const res = await fetch(`/api/playlists/addtoplaylist`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

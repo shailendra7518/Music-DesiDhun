@@ -9,6 +9,6 @@ const authenticate = require("../Middlewares/authenticate");
 router.post("/upload", authenticate, songController.uploadSong);
 
 router.get("/get", songController.getSong);
-router.post("/get-cookie", songController.getCookie);
+router.get("/get/:id", songController.getSongById);
 
 module.exports = router;

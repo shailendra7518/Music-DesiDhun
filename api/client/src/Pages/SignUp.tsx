@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleAuth from "../Components/GoogleAuth";
-const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
+// const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
  import { toast } from "react-toastify";
 interface FormData {
   username: string;
@@ -27,7 +27,7 @@ const SignUp:React.FC=()=> {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await fetch(`${apiUrl}/api/auth/signup`, {
+      await fetch(`/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

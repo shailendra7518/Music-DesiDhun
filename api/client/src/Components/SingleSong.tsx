@@ -1,7 +1,7 @@
-import React from 'react'
+
 import { useState } from 'react';
 import { useEffect } from 'react';
-const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
+// const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
 import {
   startSong
 } from "../Redux/features/songSlice";
@@ -38,10 +38,11 @@ function SingleSong({songId}:any) {
     const fetchSongById = async () => {
       try {
         setIsloading(true)
-        const res = await fetch(`${apiUrl}/api/songs/get/${songId}`)
+        const res = await fetch(`/api/songs/get/${songId}`)
         const data = await res.json();
         console.log(data)
         setSong(data.song)
+
         setIsloading(false)
       } catch (error) {
         setIsloading(false)

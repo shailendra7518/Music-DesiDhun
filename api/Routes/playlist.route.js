@@ -6,7 +6,8 @@ const authenticate = require("../Middlewares/authenticate");
 // Other routes...
 
 router.post("/create", authenticate, playlistController.createPlaylist);
-router.post("/addtoplaylist", authenticate, playlistController.addToPlaylist);
-router.get("/getall",playlistController.getPlaylists);
+router.post("/addtoplaylist", authenticate, playlistController.addSongToPlaylist);
+router.get("/getall", playlistController.getPlaylists);
+
 
 module.exports = router;

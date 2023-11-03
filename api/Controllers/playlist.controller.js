@@ -3,7 +3,7 @@ const SongModel = require("../Models/song.model");
 const UserModel = require("../Models/user.model");
 
 const playlistCongroller = {
-    addToPlaylist: async (req, res) => {
+    addSongToPlaylist: async (req, res) => {
         const { playlistId, songId } = req.body;
 
         try {
@@ -47,7 +47,7 @@ const playlistCongroller = {
   }
     },
     getPlaylists: async (req, res) => {
-        console.log('working')
+      
         try {
             const list = await PlaylistModel.find();
             
@@ -58,7 +58,7 @@ const playlistCongroller = {
             }))
 
 
-            console.log(playlists)
+           
 
             res.status(200).json(playlists)
             

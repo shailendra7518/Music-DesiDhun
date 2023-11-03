@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 
-const apiUrl: string =import.meta.env.VITE_API_BASE_URL;
+// const apiUrl: string =import.meta.env.VITE_API_BASE_URL;
 function Playlist() {
   const Navigate = useNavigate();
   const [playListName,setPlayListName]=useState('')
@@ -19,7 +19,7 @@ function Playlist() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res =await fetch(`${apiUrl}/api/playlists/create`, {
+      const res =await fetch(`/api/playlists/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,18 +45,18 @@ console.log(playList)
 
 
   return (
-    <div className=" flex flex-col text-center  w-full sm:w-auto">
+    <div className=" flex flex-col text-center  justify-start items-center">
       <div className=" p-2 rounded-lg bg-slate-700  mt-20  sm:mt-4">
         <form
           onSubmit={handleSubmit}
-          className="flex justify-between gap-2  bg-slate-700 w-full sm:w-auto"
+          className="flex justify-between gap-2  bg-slate-700 "
         >
           <input
             onChange={handleChange}
             type="text"
             placeholder="Playlist Name"
             id="name"
-            className=" p-3 rounded-lg outline-none w-full sm:w-auto sm:p-0 bg-slate-700 text-white"
+            className=" p-3 rounded-lg outline-none  sm:w-auto sm:p-0 bg-slate-700 text-white"
           />
           <button
             type="submit"
@@ -69,7 +69,7 @@ console.log(playList)
 
       <div className="p-4">
         <h2 className="text-2xl mb-4 text-white font-semibold">Playlists</h2>
-        <div className="flex flex-wrap gap-4 items-center justify-center">
+        <div className="flex flex-wrap gap-4 items-start justify-start">
           {playList.length > 0 &&
             playList.map((list: any) => (
               <Link to={`/playlist/${list.playlist._id}`}>
