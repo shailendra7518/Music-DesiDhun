@@ -152,7 +152,7 @@ const authController = {
         await myUser.save();
 
         const token = jwt.sign({ id: myUser._id }, process.env.JWT_SECRET_KEY, {
-          expiresIn: "100h",
+          expiresIn: "48h",
         });
 
         res.json({

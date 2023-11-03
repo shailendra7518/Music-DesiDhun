@@ -1,8 +1,9 @@
 const PlaylistModel = require("../Models/playlist.model");
 const SongModel = require("../Models/song.model");
+const UserModel = require("../Models/user.model");
 
 const playlistCongroller = {
-    addToPlaylist: async (req, res) => {
+    addSongToPlaylist: async (req, res) => {
         const { playlistId, songId } = req.body;
 
         try {
@@ -44,7 +45,29 @@ const playlistCongroller = {
   } catch (error) {
     return res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
-}
+    },
+    getPlaylists: async (req, res) => {
+      
+        try {
+            const list = await PlaylistModel.find();
+            
+          const playlists= await Promise.all(list.map(async(playlist) => {
+              const creater = await UserModel.findById(playlist.creater_ref)
+            
+              return {playlist,creater}
+            }))
+
+
+           
+
+            res.status(200).json(playlists)
+            
+        } catch (error) {
+            console.log(error)
+        }
+
+
+    }
 
 
 }

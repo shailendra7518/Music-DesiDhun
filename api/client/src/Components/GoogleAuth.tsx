@@ -4,12 +4,16 @@ import  app  from "../firebase/firebase";
 import { useDispatch } from "react-redux";
 import { signInSuccess} from "../Redux/features/authSlice";
 import { useNavigate } from "react-router-dom";
-
-const apiUrl :string = import.meta.env.VITE_API_BASE_URL;
+import Cookies from 'js-cookie'
+ import { toast } from "react-toastify";
+// const apiUrl :string = import.meta.env.VITE_API_BASE_URL;
 
 function GoogleAuth() {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
+
+
+
 
   const handleGoogleClick = async () => {
     try {
@@ -17,7 +21,7 @@ function GoogleAuth() {
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider);
 console.log(result);
-      const res = await fetch(`${apiUrl}/api/auth/google`, {
+      const res = await fetch(`/api/auth/google`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,25 +33,32 @@ console.log(result);
         }),
       });
 
-        const data = await res.json();
+      const data = await res.json();
+      // const inMinutes = new Date(new Date().getTime() + 1 * 60 * 1000);
+      Cookies.set('token',data.token,{expires:2 })
       dispatch(signInSuccess(data));
+      toast.success("Google Logged In Successfully!")
           Navigate("/");
         
     } catch (error) {
+      toast.error("Login Failed")
       console.log("Could not sign in with Google", error);
     }
   };
 
   return (
-    <button
-      type="button"
-      onClick={handleGoogleClick}
-      className="p-4 w-full rounded-md outline-none
+    <>
+      <button
+        type="button"
+        onClick={handleGoogleClick}
+        className="p-4 w-full rounded-md outline-none
             bg-cyan-900 font-semibold text-white hover:opacity-70
             uppercase truncate"
-    >
-      Continue with Google
-    </button>
+      >
+        Continue with Google
+      </button>
+
+    </>
   );
 }
 

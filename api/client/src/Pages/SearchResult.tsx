@@ -2,7 +2,7 @@
 
 function SearchResult() {
   return (
-    <div className='text-center'>SearchResult</div>
+    <div>SearchResult</div>
   )
 }
 

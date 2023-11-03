@@ -1,5 +1,5 @@
 import React, { useRef, useState} from "react";
-const apiUrl :string =import.meta.env.VITE_API_BASE_URL
+// const apiUrl :string =import.meta.env.VITE_API_BASE_URL
 import {
   getStorage,
   uploadBytesResumable,
@@ -7,7 +7,9 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import app from "../firebase/firebase";
+ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 interface FormData{
     title: string;
     artist: string;
@@ -33,7 +35,7 @@ const UploadSong: React.FC = () => {
      const fileRef = useRef<HTMLInputElement>(null);
      const [filePerc, setFilePerc] = useState(0);
      const [fileUploadError, setFileUploadError] = useState(false);
-
+  const Navigate = useNavigate();
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {value ,id} = e.target;
     setFormData({
@@ -69,14 +71,17 @@ console.log(cover)
         setFilePerc(Math.round(progress));
       },
       (error) => {
+        toast.error("Uploading Failed")
         console.log(error)
         setFileUploadError(true);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           if (type == 'file') {
+            toast.success("Music File uploaded")
             return setFormData({ ...formData, fileUrl: downloadURL });
           } else if (type == 'cover') {
+            toast.success("Cover Image uploaded")
             return setFormData({ ...formData, cover: downloadURL });
            }
             
@@ -92,7 +97,7 @@ console.log(cover)
   const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       try {
-          const res = await fetch(`${apiUrl}/api/songs/upload`, {
+          const res = await fetch(`/api/songs/upload`, {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
@@ -101,15 +106,15 @@ console.log(cover)
               body: JSON.stringify({...formData ,uploadedBy:currentUser.user._id})
 
           });
-
+            
           const data = await res.json();
           console.log(data)
-          
+          toast.success("Song Uploaded Successfully")
         setFormData(initialState)
-
+      Navigate("/")
           
       } catch (error) {
-          
+          toast.error("Song Uploading Failed")
           console.log(error)
       }
        
