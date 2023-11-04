@@ -1,50 +1,62 @@
 import { useDispatch, useSelector } from "react-redux";
 import { startSong } from "../Redux/features/songSlice";
-import React,{ useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 // const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
-import { toast } from 'react-toastify';
-const Songs =() => {
-  const { songList ,playList} = useSelector((state: any) => state.song)
-  const { currentUser } = useSelector((state: any) => state.user)
-  
-  const [myPlaylList,setMyPlayList]=useState([])
+import { toast } from "react-toastify";
+const Songs = () => {
+  const { songList } = useSelector((state: any) => state.song);
+  const { currentUser } = useSelector((state: any) => state.user);
+
+  const [myPlayLists, setMyPlayLists] = useState([]);
   const dispatch = useDispatch();
 
-  const handlePlay = (song:any) => {
+  const handlePlay = (song: any) => {
     dispatch(startSong(song));
-  }
-  const addSongInPlalist = async(e:React.ChangeEvent<HTMLSelectElement>) => {
-    
-    const songId = e.target.id;
-    const playlistId = e.target.value
-   
+  };
+
+  // fetch playlist by creater id
+
+  const fetchPlayListByCreaterId = async () => {
     try {
-      const res = await fetch(`/api/playlists/addtoplaylist`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'token':currentUser.token
-        },
-        body: JSON.stringify({ playlistId: playlistId, songId: songId })
-        
-      })
+      const res = await fetch(
+        `/api/playlists/getbycreator/${currentUser.user._id}`
+      );
       const data = await res.json();
-      toast.success(`Song added in playlist`)
-        console.log(data)
+      console.log("fetch", data);
+      setMyPlayLists(data);
     } catch (error) {
-      toast.error("Failed to add in playlist")
-      
-      }
-    
-
-
-  }
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
+    if (currentUser) {
+      fetchPlayListByCreaterId();
+    }
+  }, []);
 
-    setMyPlayList(playList.filter((list:any)=>(list.playlist.creater_ref===currentUser.user._id)))
-  },[])
+  console.log(currentUser.user._id);
 
+  const addSongInPlalist = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const songId = e.target.id;
+    const playlistId = e.target.value;
+
+    try {
+      const res = await fetch(`/api/playlists/addtoplaylist`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          token: currentUser.token,
+        },
+        body: JSON.stringify({ playlistId: playlistId, songId: songId }),
+      });
+      const data = await res.json();
+      toast.success(`Song added in playlist`);
+      console.log(data);
+    } catch (error) {
+      toast.error("Failed to add in playlist");
+    }
+  };
 
   return (
     <div className="flex flex-col items-start gap-4 p-4 mt-10 w-full pb-44">
@@ -60,13 +72,13 @@ const Songs =() => {
         songList.map((song: any) => (
           <div
             key={song._id}
-            onClick={() => handlePlay(song)}
-            className="flex flex-col bg-white items-start gap-2 w-full md:w-3/4 sm:w-2/4 justify-between rounded-lg p-4 sm:flex-row sm:items-center font-semibold cursor-pointer hover:bg-slate-200 transform hover:scale-x-90 transition-transform"
+            className="flex flex-col bg-white items-start gap-2 w-full md:w-3/4 sm:w-2/4 justify-between rounded-lg p-4 sm:flex-row sm:items-center font-semibold"
           >
             <img
+              onClick={() => handlePlay(song)}
               src={song.cover}
               alt="cover image"
-              className="h-40 w-full sm:w-10 sm:h-10 "
+              className="h-40 w-full sm:w-10 sm:h-10 hover:scale-110 cursor-pointer"
             />
 
             <p className="truncate w-44">
@@ -94,13 +106,15 @@ const Songs =() => {
                 id={song._id}
                 className="text-white bg-slate-700 outline-none rounded-lg p-1"
               >
-                <option className="bg-slate-700 text-white" value="" id="">Select-Playlist</option>
-                {myPlaylList.length > 0 && myPlaylList.map((list: any) => (
-                  
-                  <option key={list.playlist._id} value={list.playlist._id}  >{ list.playlist.name}</option>
-
-
-                ))}
+                <option className="bg-slate-700 text-white" value="" id="">
+                  Select-Playlist
+                </option>
+                {myPlayLists.length > 0 &&
+                  myPlayLists.map((playlist: any) => (
+                    <option key={playlist._id} value={playlist._id}>
+                      {playlist.name}
+                    </option>
+                  ))}
               </select>
             </div>
           </div>

@@ -4,7 +4,6 @@ const SongModel = require("../Models/song.model");
 
 const songController = {
   uploadSong: async (req, res) => {
-    console.log(req.body);
     const { title, artist, album, uploadedBy, fileUrl, cover } = req.body;
 
     try {
@@ -40,12 +39,12 @@ const songController = {
     }
   },
   getSongById: async (req, res) => {
-      const songId=req.params.id
+    const songId = req.params.id;
     try {
       if (!songId) {
-        res.status(400).json({message:'songId is required'})
+        res.status(400).json({ message: "songId is required" });
       }
-          
+
       const song = await SongModel.findById(songId);
       res.json({ status: 200, message: "successfull", song });
     } catch (error) {
@@ -53,7 +52,7 @@ const songController = {
         .status(500)
         .json({ message: "Internal Server Error", error: error.message });
     }
-  }
+  },
 };
 
 module.exports = songController;

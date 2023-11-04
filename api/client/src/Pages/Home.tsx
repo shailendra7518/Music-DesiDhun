@@ -1,88 +1,85 @@
-import {useEffect,useState} from "react";
-import { useDispatch, useSelector} from "react-redux";
-import { startSong, addSongInList, addInPlaylist } from "../Redux/features/songSlice";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { startSong, addSongInList } from "../Redux/features/songSlice";
 import { Link } from "react-router-dom";
 
-const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
+// const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
 // HomePage.tsx
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
 const Home: React.FC = () => {
   const dispatch = useDispatch();
-const [loading,setLoading]=useState(false)
-  
-const {songList=[],playList=[]}=useSelector((state:any)=>state.song)
+  const [loading, setLoading] = useState(false);
+  const [PlayLists, setPlayLists] = useState([]);
 
- useEffect(() => {
-   const fetchSongs = async () => {
-     try {
-       setLoading(true)
-       const res = await fetch(`${apiUrl}/api/songs/get`);
-       const data = await res.json();
-       console.log(data);
-       dispatch(addSongInList(data.songs))
-      //  setSongs(data.songs);
-       setLoading(false)
-     } catch (error) {
-       setLoading(false)
-       console.log(error);
-     }
-   };
+  const { songList = [] } = useSelector((state: any) => state.song);
 
- const fetchPlaylists = async () => {
-   try {
+  useEffect(() => {
+    fetchSongs();
+    fetchPlaylists();
+  }, []);
+
+  // get all the songs for home page
+  const fetchSongs = async () => {
+    try {
       setLoading(true);
-     const res = await fetch(`${apiUrl}/api/playlists/getall`);
-     const data = await res.json();
-     console.log(data);
-       
-     dispatch(addInPlaylist(data))
-      
+      const res = await fetch(`/api/songs/get`);
+      const data = await res.json();
+      console.log(data);
+      dispatch(addSongInList(data.songs));
+      //  setSongs(data.songs);
       setLoading(false);
-   } catch (error) {
+    } catch (error) {
       setLoading(false);
-     console.log(error);
-   }
- };
+      console.log(error);
+    }
+  };
 
-   fetchSongs();
-   fetchPlaylists();
- }, []);
-  
-  
-  const handlePlay = (song:any)=>{
-    
-  dispatch(startSong(song))
+  // fetch all the playlist for home page
+  const fetchPlaylists = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(`/api/playlists/getall`);
+      const data = await res.json();
+      console.log(data);
 
+      setPlayLists(data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
 
-  }
+  // handle play to play a song
+  const handlePlay = (song: any) => {
+    dispatch(startSong(song));
+  };
 
+  // add the breakpoint for deffrent scrren size
+  const responsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5,
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 4,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 3,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+    },
+  };
 
-
-   const responsive = {
-     superLargeDesktop: {
-       // the naming can be any, depends on you.
-       breakpoint: { max: 4000, min: 3000 },
-       items: 5,
-     },
-     desktop: {
-       breakpoint: { max: 3000, min: 1024 },
-       items: 4,
-     },
-     tablet: {
-       breakpoint: { max: 1024, min: 464 },
-       items: 3,
-     },
-     mobile: {
-       breakpoint: { max: 464, min: 0 },
-       items: 1,
-     },
-   };
-
-  
   return loading ? (
-    <h1>Loading...</h1>
+    <h1 className="font-semibold text-5xl text-white text-center">Loading...</h1>
   ) : (
     <div className="p-2 pb-32 mt-16 max-w-xl md:max-w-5xl sm:max-w-5xl sm:mt-0">
       <section className="mb-8 ">
@@ -115,32 +112,32 @@ const {songList=[],playList=[]}=useSelector((state:any)=>state.song)
           Recommended Playlists
         </h1>
         <Carousel className=" w-full gap-4" responsive={responsive}>
-          {playList.length > 0 &&
-            playList.map((list: any) => (
-              <Link to={`/playlist/${list.playlist._id}`}>
+          {PlayLists.length > 0 &&
+            PlayLists.map((playlist: any) => (
+              <Link to={`/playlist/${playlist._id}`}>
                 <div
-                  onClick={() => handlePlay(list)}
-                  key={list.playlist._id}
+                  onClick={() => handlePlay(playlist)}
+                  key={playlist._id}
                   className="bg-rose-100 w-full h-96 p-4 shadow-lg rounded-lg mb-4 cursor-pointer transform hover:scale-105 transition-transform sm:w-60 sm:h-60"
                 >
                   <img
-                    src={`https://placehold.co/600x400?text=${list?.playlist.name}`}
-                    alt={list.playlist.name}
+                    src={`https://placehold.co/600x400?text=${playlist?.name}`}
+                    alt={playlist.name}
                     className=" h-56 w-full object-cover mb-2 sm:h-32"
                   />
                   <p className=" font-semibold mb-1 truncate">
-                    {list.playlist.name}{" "}
+                    {playlist.name}{" "}
                     <span className="text-red-600 ml-2">
                       Songs:{" "}
                       <span className="text-green-400">
-                        {list.playlist.songs.length}
+                        {playlist.songs.length}
                       </span>
                     </span>
                   </p>
                   <p className=" font-semibold mb-1 truncate">
                     Created By
                     <span className="text-red-600 ml-2">
-                      {list.creater.username}
+                      {playlist.creator.username}
                     </span>
                   </p>
                 </div>
@@ -178,5 +175,3 @@ const {songList=[],playList=[]}=useSelector((state:any)=>state.song)
 };
 
 export default Home;
-
-

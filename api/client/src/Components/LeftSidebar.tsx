@@ -9,39 +9,37 @@ import { useSelector } from "react-redux";
 import SearchBar from "./SearchBar";
 const LeftSidebar = () => {
   const {currentUser} = useSelector((state: any) => state.user)
-  
   return (
     <div className="bg-gray-800 pt-2 min-h-screen  w-16 sm:w-auto sm:pl-2">
       {/* Profile Section */}
 
-      {currentUser ? (
-        <div className="flex items-center gap-3 left-0  mt-1  rounded-md ">
-          <Link to={"/"}>
-            <div className=" hidden sm:block">
-              <p className="text-cyan-400  bg-slate-700 p-2 rounded-lg font-semibold text-2xl truncate">
-                DesiDhun
-              </p>
-            </div>
-          </Link>
-         
-            <Link to={"/profile"} className="cursor-pointer">
-              <img
-                src={currentUser && currentUser.user.avatar}
-                alt="Profile"
-                className="w-10 h-10 rounded-full mr-3 "
-              />
-            </Link>
-         
-        </div>
-      ) : (
-        <Link
-          className="text-white flex items-center justify-center bg-slate-700 mt-5 p-2 rounded-md"
-          to={"/signup"}
-        >
-          SignIn
+      <div className="flex items-center gap-3 left-0  mt-1  rounded-md ">
+        <Link to={"/"}>
+          <div className="hidden sm:block">
+            <p className="text-cyan-400  bg-slate-700 p-2 rounded-lg font-semibold text-2xl truncate">
+              DesiDhun
+            </p>
+          </div>
         </Link>
-      )}
-      <div className="hidden sm:flex">
+        {currentUser ? (
+          <Link to={"/profile"} className="z-10" >
+            <img
+              className="w-10 h-10 rounded-full mr-3 hover:scale-110 "
+              src={currentUser && currentUser.user.avatar}
+              alt="Profile"
+            />
+          </Link>
+        ) : (
+          <Link
+            to={"/signup"}
+            className="text-white flex items-center justify-center bg-slate-700  p-2 rounded-md"
+          >
+            SignIn
+          </Link>
+        )}
+      </div>
+
+      <div className="hidden  sm:flex">
         <SearchBar />
       </div>
 
