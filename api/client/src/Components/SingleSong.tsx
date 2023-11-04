@@ -1,19 +1,9 @@
-import { useState } from "react";
+
 
 // const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
 import { startSong } from "../Redux/features/songSlice";
 import { useDispatch } from "react-redux";
 
-interface Song {
-  album: string;
-  cover: string;
-  title: string;
-  artist: string;
-  file: string;
-  uploadedBy: string;
-  __v: number;
-  _id: string;
-}
 
 function SingleSong({ song,playlistId, handleDeleteSongById }: any) {
 
