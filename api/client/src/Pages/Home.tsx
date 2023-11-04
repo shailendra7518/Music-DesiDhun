@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 
 const apiUrl: string = import.meta.env.VITE_API_BASE_URL;
 // HomePage.tsx
-
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 const Home: React.FC = () => {
   const dispatch = useDispatch();
@@ -57,57 +58,75 @@ const {songList=[],playList=[]}=useSelector((state:any)=>state.song)
 
   }
 
+
+
+   const responsive = {
+     superLargeDesktop: {
+       // the naming can be any, depends on you.
+       breakpoint: { max: 4000, min: 3000 },
+       items: 5,
+     },
+     desktop: {
+       breakpoint: { max: 3000, min: 1024 },
+       items: 4,
+     },
+     tablet: {
+       breakpoint: { max: 1024, min: 464 },
+       items: 3,
+     },
+     mobile: {
+       breakpoint: { max: 464, min: 0 },
+       items: 1,
+     },
+   };
+
   
   return loading ? (
     <h1>Loading...</h1>
   ) : (
-      <div className="p-2 pb-32 mt-16 sm:mt-0">
-        {/* <Slider {...settings}>
-          <h1>1</h1>
-          <h1>2</h1>
-        </Slider> */}
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4 text-white">
+    <div className="p-2 pb-32 mt-16 max-w-xl md:max-w-5xl sm:max-w-5xl sm:mt-0">
+      <section className="mb-8 ">
+        <h1 className="text-2xl font-semibold mb-4 text-white">
           Recommended Music
-        </h2>
-          <div className="flex flex-wrap  gap-4">
-            
+        </h1>
+        {/* <div className="flex flex-wrap  gap-4"> */}
+        <Carousel className=" gap-4" responsive={responsive}>
           {songList.length > 0 &&
             songList.map((song: any) => (
               <div
                 onClick={() => handlePlay(song)}
                 key={song._id}
-                className="bg-rose-100 w-60 p-4 shadow-lg rounded-lg mb-4 cursor-pointer transform hover:scale-105 transition-transform"
+                className="bg-rose-100 w-full h-96 p-4 shadow-lg rounded-lg mb-4 cursor-pointer transform hover:scale-105 transition-transform sm:w-60 sm:h-60"
               >
                 <img
                   src={song.cover}
                   alt={song.title}
-                  className=" h-32 w-full object-cover mb-2 "
+                  className=" h-56 w-full object-cover mb-2 sm:h-32 "
                 />
                 <p className=" font-semibold mb-1 truncate">{song.title}</p>
                 <p className="text-gray-500">{song.artist}</p>
               </div>
             ))}
-        </div>
+        </Carousel>
       </section>
 
       <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4 text-white">
+        <h1 className="text-2xl font-semibold mb-4 text-white">
           Recommended Playlists
-        </h2>
-        <div className="flex flex-wrap  gap-4">
+        </h1>
+        <Carousel className=" w-full gap-4" responsive={responsive}>
           {playList.length > 0 &&
             playList.map((list: any) => (
               <Link to={`/playlist/${list.playlist._id}`}>
                 <div
                   onClick={() => handlePlay(list)}
                   key={list.playlist._id}
-                  className="bg-rose-100 w-60 p-4 shadow-lg rounded-lg mb-4 cursor-pointer transform hover:scale-105 transition-transform"
+                  className="bg-rose-100 w-full h-96 p-4 shadow-lg rounded-lg mb-4 cursor-pointer transform hover:scale-105 transition-transform sm:w-60 sm:h-60"
                 >
                   <img
                     src={`https://placehold.co/600x400?text=${list?.playlist.name}`}
                     alt={list.playlist.name}
-                    className=" h-32 w-full object-cover mb-2 "
+                    className=" h-56 w-full object-cover mb-2 sm:h-32"
                   />
                   <p className=" font-semibold mb-1 truncate">
                     {list.playlist.name}{" "}
@@ -127,22 +146,32 @@ const {songList=[],playList=[]}=useSelector((state:any)=>state.song)
                 </div>
               </Link>
             ))}
-        </div>
+        </Carousel>
       </section>
 
       <section>
-        <h2 className="text-2xl font-semibold mb-4">Recommended Albums</h2>
-        <div className="flex  md:flex-wrap gap-4">
-          <div className="bg-white w-auto p-4 shadow-lg rounded-lg mb-4">
-            <img
-              src={"http://via.placeholder.com/640x360"}
-              alt={"title"}
-              className="w-full h-32 object-cover mb-2"
-            />
-            <p className="text-xl font-semibold mb-1">title</p>
-            <p className="text-gray-500">artist</p>
-          </div>
-        </div>
+        <h1 className="text-2xl font-semibold mb-4 text-white">
+          Recommended Albums
+        </h1>
+        <Carousel className=" w-full gap-4" responsive={responsive}>
+          {songList.length > 0 &&
+            songList.map((song: any) => (
+              <div
+                onClick={() => handlePlay(song)}
+                key={song._id}
+                className="bg-rose-100 w-full h-96 p-4 shadow-lg rounded-lg mb-4 cursor-pointer transform hover:scale-105 transition-transform sm:w-60 sm:h-60"
+              >
+                <img
+                  src={song.cover}
+                  alt={song.title}
+                  className="h-56 w-full object-cover mb-2 sm:h-32"
+                />
+                <h2 className="text-red-950 text-lg font-semibold">
+                  {song.album}
+                </h2>
+              </div>
+            ))}
+        </Carousel>
       </section>
     </div>
   );

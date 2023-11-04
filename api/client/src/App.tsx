@@ -42,7 +42,7 @@ const App: React.FC = () => {
 
         <LeftSidebar />
 
-        <div className="flex flex-1 justify-center pb-40">
+        <div className="flex flex-1 justify-center pb-40 bg-gradient-to-b from-red-900 to-slate-600">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/album" element={<Album />} />
