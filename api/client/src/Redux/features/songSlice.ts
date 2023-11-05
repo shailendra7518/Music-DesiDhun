@@ -17,12 +17,14 @@ interface SongState {
   currentSong: Song | null;
   isPlaying: boolean;
   player: boolean;
+  searchTerm: string;
 
 }
 
 const initialState: SongState = {
   playList:[],
   songList: [],
+  searchTerm:'',
   currentSong: null,
   isPlaying: false,
   player:false
@@ -40,6 +42,10 @@ const songSlice = createSlice({
       state.isPlaying = true;
       state.player = true;
     },
+    searchSongs: (state, action) => {
+      state.searchTerm = action.payload;
+
+    },
     playSong: (state) => {
       state.isPlaying = true;
     },
@@ -52,5 +58,5 @@ const songSlice = createSlice({
   },
 });
 
-export const { playSong,pauseSong,startSong ,addSongInList,addInPlaylist} = songSlice.actions;
+export const { playSong,pauseSong,startSong ,addSongInList,addInPlaylist,searchSongs} = songSlice.actions;
 export default songSlice.reducer;

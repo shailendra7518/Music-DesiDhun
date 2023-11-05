@@ -12,6 +12,10 @@ const playlistCongroller = {
         return res.status(404).json({ message: "Playlist or Song not found" });
       }
 
+      if (playlist.songs.includes(songId)) {
+         return res.status(404).json({status:404, message: "Song already in the plalist" });
+      }
+
       playlist.songs.push(songId);
       await playlist.save();
 

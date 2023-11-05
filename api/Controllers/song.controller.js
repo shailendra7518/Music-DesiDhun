@@ -53,6 +53,25 @@ const songController = {
         .json({ message: "Internal Server Error", error: error.message });
     }
   },
+  getSongsBySearch: async (req, res) => {
+    // query by this we can search song
+    const { query } = req.query;
+
+    try {
+      const results = await SongModel.find({
+        $or: [
+          { title: { $regex: query, $options: "i" } }, // Case-insensitive search on title
+          { artist: { $regex: query, $options: "i" } }, // Case-insensitive search on artist
+          // Add more fields as needed for your search
+        ],
+      });
+      // we can sent response with status code 200 if we get the data
+      res.status(200).json(results);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  },
 };
 
 module.exports = songController;

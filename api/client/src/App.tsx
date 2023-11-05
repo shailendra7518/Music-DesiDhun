@@ -7,7 +7,6 @@ import SignUp from "./Pages/SignUp";
 import Browse from "./Pages/Browse";
 import Playlist from "./Pages/Playlist";
 import Profile from "./Pages/Profile";
-import Artist from "./Pages/Artist";
 import Player from "./Pages/Player";
 import Songs from "./Pages/Songs";
 import PrivateRoute from "./Components/PrivateRoute";
@@ -20,6 +19,7 @@ import { useDispatch } from "react-redux";
 import { signOut } from "./Redux/features/authSlice";
 import SingleSong from "./Components/SingleSong";
 import SinglePlayList from "./Pages/SinglePlayList";
+import SearchResult from "./Pages/SearchResult";
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -45,17 +45,16 @@ const App: React.FC = () => {
         <div className="flex flex-1 justify-center pb-40 bg-gradient-to-b from-red-900 to-slate-600">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/album" element={<Album />} />
+            <Route path="/playlist" element={<Playlist />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/browse" element={<Browse />} />
-            <Route path="/playlist" element={<Playlist />} />
-
-            <Route path="/playlist/:id" element={<SinglePlayList />} />
-            <Route path="/artist" element={<Artist />} />
-            <Route path="/player" element={<Player />} />
+            <Route path="/search" element={<SearchResult />} />
             <Route path="/song" element={<Songs />} />
             <Route path="/song/:id" element={<SingleSong />} />
+            <Route path="/playlist/:id" element={<SinglePlayList />} />
+            <Route path="/player" element={<Player />} />
+            <Route path="/browse" element={<Browse />} />
+            <Route path="/album" element={<Album />} />
             <Route element={<PrivateRoute />}>
               <Route path="/profile" element={<Profile />} />
               <Route path="/upload" element={<UploadSong />} />

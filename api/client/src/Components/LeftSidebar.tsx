@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { MdFeaturedPlayList, MdOutlineMic, MdMusicNote, MdHome } from "react-icons/md";
+import { MdFeaturedPlayList, MdOutlineMic, MdHome ,MdUpload } from "react-icons/md";
 import {BiSolidCalendarStar } from "react-icons/bi";
 import { FiRadio } from 'react-icons/fi';
 import { AiFillHeart } from 'react-icons/ai'
@@ -58,11 +58,11 @@ const LeftSidebar = () => {
           </Link>
 
           <Link
-            to={"/artist"}
+            to={"/song"}
             className="p-2 text-2xl flex items-center gap-3 text-white opacity-70 hover:opacity-95 font-semibold ml-4 hover:bg-green-800"
           >
             <MdOutlineMic />
-            <p className="text-lg  hidden sm:block">Artist</p>
+            <p className="text-lg  hidden sm:block">Songs</p>
           </Link>
 
           <Link
@@ -74,11 +74,11 @@ const LeftSidebar = () => {
           </Link>
 
           <Link
-            to={"/song"}
+            to={"/upload"}
             className="p-2 text-2xl flex items-center gap-3 text-white opacity-70 hover:opacity-95 font-semibold ml-4 hover:bg-green-800"
           >
-            <MdMusicNote />
-            <p className="text-lg  hidden sm:block">Song</p>
+            <MdUpload />
+            <p className="text-lg  hidden sm:block">Upload</p>
           </Link>
         </div>
       </div>

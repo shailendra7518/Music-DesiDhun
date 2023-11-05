@@ -6,10 +6,12 @@ import {
   ref,
   getDownloadURL,
 } from "firebase/storage";
+
 import app from "../firebase/firebase";
  import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { MdUpload } from "react-icons/md";
 interface FormData{
     title: string;
     artist: string;
@@ -66,6 +68,7 @@ console.log(cover)
     uploadTask.on(
       "state_changed",
       (snapshot) => {
+          
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setFilePerc(Math.round(progress));
@@ -78,9 +81,12 @@ console.log(cover)
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           if (type == 'file') {
+             setFilePerc(0);
             toast.success("Music File uploaded")
+            
             return setFormData({ ...formData, fileUrl: downloadURL });
           } else if (type == 'cover') {
+             setFilePerc(0);
             toast.success("Cover Image uploaded")
             return setFormData({ ...formData, cover: downloadURL });
            }
@@ -162,7 +168,6 @@ console.log(cover)
           <input
             type="file"
             onChange={handleFileChange}
-          
             id="cover"
             className="w-full p-2 border rounded"
             accept="image/*"
@@ -170,9 +175,12 @@ console.log(cover)
           />
           <button
             type="button"
-          onClick={()=>handleFileUpload(cover,'cover')}
-            className="bg-slate-700 uppercase hover:opacity-70 text-white font-semibold rounded-lg p-2">
-            cover
+            disabled={filePerc != 0}
+            onClick={() => handleFileUpload(cover, "cover")}
+            className="bg-slate-700 hover:opacity-70 text-white font-semibold rounded-lg p-2 flex items-center"
+          >
+            <MdUpload />
+            {filePerc > 0 ? filePerc : "Cover"}
           </button>
         </div>
         <div className="mb-4 flex bg-white rounded-lg gap-1 p-2">
@@ -187,10 +195,13 @@ console.log(cover)
             required
           />
           <button
-          onClick={()=>handleFileUpload(file,'file')}
+            disabled={filePerc !=0}
+            onClick={() => handleFileUpload(file, "file")}
             type="button"
-            className="bg-slate-700 uppercase hover:opacity-70 text-white font-semibold rounded-lg p-2">
-            music
+            className="bg-slate-700 hover:opacity-70 text-white font-semibold rounded-lg p-2 flex items-center text-sm"
+          >
+            <MdUpload />
+            {filePerc > 0 ? filePerc : "  Music"}
           </button>
         </div>
         <button

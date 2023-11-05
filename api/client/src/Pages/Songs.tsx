@@ -35,7 +35,6 @@ const Songs = () => {
     }
   }, []);
 
-  console.log(currentUser.user._id);
 
   const addSongInPlalist = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const songId = e.target.id;
@@ -51,6 +50,11 @@ const Songs = () => {
         body: JSON.stringify({ playlistId: playlistId, songId: songId }),
       });
       const data = await res.json();
+    
+      if (res.status == 404) {
+        toast.error("Song is already in the playlist")
+        return;
+      }
       toast.success(`Song added in playlist`);
       console.log(data);
     } catch (error) {
